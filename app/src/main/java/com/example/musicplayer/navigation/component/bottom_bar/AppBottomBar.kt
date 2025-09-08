@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +28,7 @@ fun AppBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .background(LocalThemeColor.current.primary.p50)
+            .navigationBarsPadding()
     ) {
         Box(
             modifier = Modifier

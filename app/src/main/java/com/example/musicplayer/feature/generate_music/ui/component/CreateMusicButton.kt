@@ -3,7 +3,6 @@ package com.example.musicplayer.feature.generate_music.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -17,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui.theme.LocalThemeColor
+import com.example.musicplayer.ui.theme.PreviewTheme
 
 @Composable
 fun CreateMusicButton(
@@ -44,11 +44,7 @@ fun CreateMusicButton(
 @Preview
 @Composable
 private fun CreateMusicButtonPrev() {
-    Box(
-        modifier = Modifier
-            .background(LocalThemeColor.current.primary.p50)
-            .padding(LocalSpacing.current.dimen24)
-    ) {
+    PreviewTheme {
         CreateMusicButton()
     }
 }

@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.musicplayer.feature.generate_music.ui.component.CreateMusicButton
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicList
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicTopBar
+import com.example.musicplayer.feature.generate_music.ui.component.create_music.CreateMusicView
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
-import com.example.musicplayer.ui.theme.LocalSpacing
+import com.example.musicplayer.ui_core.modifier.removeFocusOnClick
 
 @Composable
 fun GenerateMusicScreen(
@@ -23,7 +23,9 @@ fun GenerateMusicScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .removeFocusOnClick(),
         topBar = {
             GenerateMusicTopBar()
         },
@@ -41,14 +43,14 @@ private fun GenerateMusicContent(
     modifier: Modifier = Modifier,
     state: GenerateMusicScreenState
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier.fillMaxSize()
+    ) {
         GenerateMusicList(
             state = state
         )
-        CreateMusicButton(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(LocalSpacing.current.dimen12)
+        CreateMusicView(
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }

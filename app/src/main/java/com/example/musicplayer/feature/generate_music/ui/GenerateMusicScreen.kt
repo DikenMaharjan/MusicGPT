@@ -48,7 +48,7 @@ private fun GenerateMusicContent(
         CreateMusicButton(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-//                .padding(LocalSpacing.current.dimen4)
+                .padding(LocalSpacing.current.dimen12)
         )
     }
 }

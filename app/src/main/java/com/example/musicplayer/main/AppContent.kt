@@ -1,6 +1,7 @@
 package com.example.musicplayer.main
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -20,11 +21,13 @@ fun AppContent(
             AppBottomBar(
                 selectedRoute = GenerateMusicRoute
             )
-        }
+        },
     ) { padding ->
         // Will be replaced by NavHost for navigation
         Box(
-            modifier = modifier.padding(padding)
+            modifier = modifier
+                .padding(padding)
+                .consumeWindowInsets(padding)
         ) {
             GenerateMusicScreen()
         }

@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.PreviewTheme
-import com.example.musicplayer.ui_core.insets.rememberZeroWindowInsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,8 +32,7 @@ fun GenerateMusicTopBar(
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
-        ),
-        windowInsets = rememberZeroWindowInsets()
+        )
     )
 }
 

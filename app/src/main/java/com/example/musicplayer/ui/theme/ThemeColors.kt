@@ -4,20 +4,21 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
+
 @Immutable
 class ThemeColors(
     val primary: ColorPalette = ColorPalette(
-        p50 = Color(0xFF0A0C0D),
-        p100 = Color(0xFF16191C),
-        p200 = Color(0xFF1D2125),
-        p250 = Color(0xFF212529),
-        p800 = Color(0xFF5D6165),
-        p1000 = Color(0xFF777A80),
-        p1100 = Color(0xFF898C92),
-        p1200 = Color(0xFFBFC2C8),
-        p5000 = Color(0xFFE4E6E8),
+        p50 = Primary50,
+        p100 = Primary100,
+        p200 = Primary200,
+        p250 = Primary250,
+        p800 = Primary800,
+        p1000 = Primary1000,
+        p1100 = Primary1100,
+        p1200 = Primary1200,
+        p5000 = Primary5000,
     ),
-    val white: Color = Color(0xFFFFFFFF)
+    val white: Color = White
 )
 
 @Immutable

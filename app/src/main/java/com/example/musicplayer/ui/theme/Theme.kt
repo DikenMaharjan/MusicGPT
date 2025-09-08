@@ -39,6 +39,7 @@ fun MusicPlayerTheme(
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     themeColors: ThemeColors = LocalThemeColor.current,
+    spacing: Spacing = LocalSpacing.current,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -52,7 +53,8 @@ fun MusicPlayerTheme(
     }
 
     CompositionLocalProvider(
-        LocalThemeColor provides themeColors
+        LocalThemeColor provides themeColors,
+        LocalSpacing provides spacing,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

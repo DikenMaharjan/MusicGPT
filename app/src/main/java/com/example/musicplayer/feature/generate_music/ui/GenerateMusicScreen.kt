@@ -1,20 +1,20 @@
 package com.example.musicplayer.feature.generate_music.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.musicplayer.feature.generate_music.ui.component.CreateMusicButton
+import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicList
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicTopBar
-import com.example.musicplayer.feature.generate_music.ui.component.MusicItem
-import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicListItem
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
+import com.example.musicplayer.ui.theme.LocalSpacing
 
 @Composable
 fun GenerateMusicScreen(
@@ -41,20 +41,14 @@ private fun GenerateMusicContent(
     modifier: Modifier = Modifier,
     state: GenerateMusicScreenState
 ) {
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
-        items(state.items) { item ->
-            when (item) {
-                is GenerateMusicListItem.GeneratingItem -> {
-                    Text(text = item.toString())
-                }
-
-                is GenerateMusicListItem.MusicItem -> MusicItem(
-                    music = item.music
-                )
-            }
-        }
+    Box(modifier = modifier.fillMaxSize()) {
+        GenerateMusicList(
+            state = state
+        )
+        CreateMusicButton(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(LocalSpacing.current.dimen8)
+        )
     }
 }

@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
+
     <string name="bottom_bar_generate_ai_icon_description">Generate AI Icon</string>
     <string name="bottom_bar_discover_icon_description">Discover Icon</string>
     <string name="bottom_bar_reel_icon_description">Reel Icon</string>
     <string name="bottom_bar_user_icon_description">User Icon</string>
+
+    <string name="generate_content_top_bar_app_logo_description">App Logo</string>
+    <string name="generate_content_top_bar_app_title">MusicGPT</string>
 </resources>

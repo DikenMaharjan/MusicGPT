@@ -10,7 +10,7 @@ class ThemeColors(
         p50 = Color(0xFF0A0C0D),
         p100 = Color(0xFF16191C),
         p200 = Color(0xFF1D2125),
-        p250 = Color(0xFF5D6165),
+        p250 = Color(0xFF212529),
         p800 = Color(0xFF5D6165),
         p1000 = Color(0xFF777A80),
         p1100 = Color(0xFF898C92),

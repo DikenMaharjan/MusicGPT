@@ -8,4 +8,6 @@
 
     <string name="generate_content_top_bar_app_logo_description">App Logo</string>
     <string name="generate_content_top_bar_app_title">MusicGPT</string>
+
+    <string name="music_item_more_icon_description">More Icon</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.musicplayer.feature.generate_content
+package com.example.musicplayer.feature.generate_music.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,17 +7,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.musicplayer.feature.generate_content.component.GenerateContentTopBar
+import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicTopBar
 
 @Composable
-fun GenerateContentScreen(
+fun GenerateMusicScreen(
     modifier: Modifier = Modifier,
-    viewModel: GenerateContentScreenViewModel = hiltViewModel()
+    viewModel: GenerateMusicScreenViewModel = hiltViewModel()
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            GenerateContentTopBar()
+            GenerateMusicTopBar()
         },
     ) { padding ->
         LazyColumn(
@@ -25,7 +25,7 @@ fun GenerateContentScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            
+
         }
     }
 }

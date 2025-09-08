@@ -81,6 +81,6 @@ private fun BottomNavigationIcon(
 @Composable
 private fun AppBottomBarPreview() {
     AppBottomBar(
-        selectedRoute = GenerateContentRoute
+        selectedRoute = GenerateMusicRoute
     )
 }

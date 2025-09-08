@@ -1,4 +1,4 @@
-package com.example.musicplayer.feature.generate_content.component
+package com.example.musicplayer.feature.generate_music.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,7 +14,7 @@ import com.example.musicplayer.ui_core.insets.rememberZeroWindowInsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenerateContentTopBar(
+fun GenerateMusicTopBar(
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
@@ -35,5 +35,5 @@ fun GenerateContentTopBar(
 @Preview
 @Composable
 private fun GenerateContentTopBarPreview() {
-    GenerateContentTopBar()
+    GenerateMusicTopBar()
 }

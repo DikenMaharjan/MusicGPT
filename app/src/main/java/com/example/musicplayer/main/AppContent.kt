@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.musicplayer.feature.generate_content.GenerateContentScreen
+import com.example.musicplayer.feature.generate_music.ui.GenerateMusicScreen
 import com.example.musicplayer.navigation.component.bottom_bar.AppBottomBar
-import com.example.musicplayer.navigation.component.bottom_bar.GenerateContentRoute
+import com.example.musicplayer.navigation.component.bottom_bar.GenerateMusicRoute
 
 @Composable
 fun AppContent(
@@ -18,7 +18,7 @@ fun AppContent(
         modifier = modifier.fillMaxSize(),
         bottomBar = {
             AppBottomBar(
-                selectedRoute = GenerateContentRoute
+                selectedRoute = GenerateMusicRoute
             )
         }
     ) { padding ->
@@ -26,7 +26,7 @@ fun AppContent(
         Box(
             modifier = modifier.padding(padding)
         ) {
-            GenerateContentScreen()
+            GenerateMusicScreen()
         }
     }
 }

@@ -19,7 +19,7 @@ val bottomNavigationItems
     @Composable
     get() = listOf(
         BottomNavigationItem(
-            route = GenerateContentRoute,
+            route = GenerateMusicRoute,
             icon = painterResource(R.drawable.generate_ai_icon),
             contentDescription = stringResource(R.string.bottom_bar_generate_ai_icon_description)
         ),
@@ -45,4 +45,4 @@ val bottomNavigationItems
 data object TempRoute
 
 // A temporary route for generate content screen
-data object GenerateContentRoute
+data object GenerateMusicRoute

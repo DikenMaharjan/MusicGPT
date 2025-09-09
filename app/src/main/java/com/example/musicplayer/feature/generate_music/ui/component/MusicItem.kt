@@ -1,6 +1,5 @@
 package com.example.musicplayer.feature.generate_music.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import coil3.compose.AsyncImage
 import com.example.musicplayer.R
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.ui.theme.LocalSpacing
@@ -28,8 +28,8 @@ fun MusicItem(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = music.image,
+        AsyncImage(
+            model = music.image,
             contentDescription = null
         )
         Column(

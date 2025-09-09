@@ -17,7 +17,8 @@ import com.example.musicplayer.ui.theme.LocalSpacing
 
 @Composable
 fun CreateMusicView(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    generateMusic: (String) -> Unit
 ) {
     var showTextField by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember {
@@ -38,7 +39,7 @@ fun CreateMusicView(
                 onFocusRemoved = {
                     showTextField = false
                 },
-                onGenerate = {}
+                onGenerate = generateMusic
             )
         } else {
             CreateMusicButton(

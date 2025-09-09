@@ -33,7 +33,8 @@ fun GenerateMusicScreen(
         GenerateMusicContent(
             modifier = Modifier
                 .padding(padding),
-            state = state
+            state = state,
+            generateMusic = viewModel::generateMusic
         )
     }
 }
@@ -41,7 +42,8 @@ fun GenerateMusicScreen(
 @Composable
 private fun GenerateMusicContent(
     modifier: Modifier = Modifier,
-    state: GenerateMusicScreenState
+    state: GenerateMusicScreenState,
+    generateMusic: (String) -> Unit
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -50,7 +52,8 @@ private fun GenerateMusicContent(
             state = state
         )
         CreateMusicView(
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
+            generateMusic = generateMusic
         )
     }
 }

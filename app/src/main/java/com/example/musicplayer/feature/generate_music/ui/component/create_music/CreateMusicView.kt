@@ -37,7 +37,8 @@ fun CreateMusicView(
                     .focusRequester(focusRequester),
                 onFocusRemoved = {
                     showTextField = false
-                }
+                },
+                onGenerate = {}
             )
         } else {
             CreateMusicButton(

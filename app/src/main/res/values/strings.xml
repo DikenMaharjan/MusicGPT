@@ -10,4 +10,5 @@
     <string name="generate_content_top_bar_app_title">MusicGPT</string>
 
     <string name="music_item_more_icon_description">More Icon</string>
+    <string name="create_music_text_field_send_button_description">Send Icon</string>
 </resources>

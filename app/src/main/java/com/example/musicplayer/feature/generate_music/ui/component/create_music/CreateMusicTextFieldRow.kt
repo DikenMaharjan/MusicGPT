@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -19,9 +20,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.addOutline
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -95,22 +97,23 @@ fun CreateMusicTextFieldRow(
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen2)
     ) {
         val textFieldState = rememberTextFieldState()
-        CompositionLocalProvider(LocalContentColor provides LocalThemeColor.current.white.copy(alpha = 0.2f)) {
-            Icon(
-                modifier = Modifier.minimumInteractiveComponentSize(),
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
+        Icon(
+            modifier = Modifier.minimumInteractiveComponentSize(),
+            imageVector = Icons.Default.Add,
+            contentDescription = null,
+            tint = LocalThemeColor.current.white.copy(alpha = 0.2f)
+        )
+        CreateMusicTextField(
+            modifier = Modifier.weight(1f),
+            textFieldState = textFieldState,
+            interactionSource = interactionSource,
+
             )
-            BasicTextField(
-                modifier = Modifier.weight(1f),
-                interactionSource = interactionSource,
-                state = textFieldState
-            )
-        }
         IconButton(
             onClick = {
                 onGenerate(textFieldState.text.toString())
-            }
+            },
+            enabled = textFieldState.text.isNotBlank()
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Default.Send,
@@ -118,6 +121,39 @@ fun CreateMusicTextFieldRow(
             )
         }
     }
+}
+
+@Composable
+private fun CreateMusicTextField(
+    modifier: Modifier = Modifier,
+    textFieldState: TextFieldState,
+    interactionSource: MutableInteractionSource
+) {
+    BasicTextField(
+        modifier = modifier,
+        interactionSource = interactionSource,
+        state = textFieldState,
+        textStyle = MaterialTheme.typography.bodyLarge.copy(
+            color = LocalContentColor.current
+        ),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        decorator = { innerTextField ->
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                propagateMinConstraints = true
+            ) {
+                if (textFieldState.text.isBlank()) {
+                    Text(
+                        text = "Create song",
+                        color = LocalThemeColor.current.white.copy(alpha = 0.2f)
+                    )
+                } else {
+                    innerTextField()
+                }
+            }
+        },
+    )
+
 }
 
 val shape = object : Shape {

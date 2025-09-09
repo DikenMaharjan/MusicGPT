@@ -1,11 +1,15 @@
 package com.example.musicplayer.feature.generate_music.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.MusicNote
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -13,11 +17,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import com.example.musicplayer.R
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.ui.theme.LocalSpacing
+import com.example.musicplayer.ui.theme.LocalThemeColor
+import com.example.musicplayer.ui.theme.PreviewTheme
+import java.time.Instant
 
 @Composable
 fun MusicItem(
@@ -26,18 +37,33 @@ fun MusicItem(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
     ) {
         AsyncImage(
+            modifier = Modifier
+                .padding(LocalSpacing.current.dimen8)
+                .size(LocalSpacing.current.dimen64)
+                .clip(MaterialTheme.shapes.medium)
+                .background(LocalThemeColor.current.primary.p1000),
             model = music.image,
-            contentDescription = null
+            contentDescription = null,
+            fallback = rememberVectorPainter(Icons.Outlined.MusicNote),
+            placeholder = rememberVectorPainter(Icons.Outlined.MusicNote),
+            error = rememberVectorPainter(Icons.Outlined.MusicNote),
         )
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
         ) {
-            Text(text = music.title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = music.prompt, style = MaterialTheme.typography.bodySmall)
+            Text(text = music.title, style = MaterialTheme.typography.bodyLarge, maxLines = 1)
+            Text(
+                text = music.prompt,
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 2,
+                color = LocalThemeColor.current.primary.p1100,
+                overflow = TextOverflow.Ellipsis
+            )
         }
         IconButton(
             onClick = {}
@@ -48,4 +74,21 @@ fun MusicItem(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun MusicItemPreview() {
+    PreviewTheme {
+        val music = Music(
+            id = "1",
+            title = "In the style of Vivaldi",
+            prompt = "A cheerful and uplifting orchestral piece in the style of Vivaldi, featuring a solo violin.",
+            image = "https://cdn.openai.com/audio/sunos/v0/2023-10-25-17-02-53/images/image.png",
+            song = "https://cdn.openai.com/audio/sunos/v0/2023-10-25-17-02-53/audio.mp3",
+            createdAt = Instant.parse("2023-10-25T17:02:53Z")
+        )
+        MusicItem(music = music)
+    }
+
 }

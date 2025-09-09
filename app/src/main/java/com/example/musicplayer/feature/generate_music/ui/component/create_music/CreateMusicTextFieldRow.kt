@@ -106,9 +106,8 @@ fun CreateMusicTextFieldRow(
         CreateMusicTextField(
             modifier = Modifier.weight(1f),
             textFieldState = textFieldState,
-            interactionSource = interactionSource,
-
-            )
+            interactionSource = interactionSource
+        )
         IconButton(
             onClick = {
                 onGenerate(textFieldState.text.toString())
@@ -147,9 +146,8 @@ private fun CreateMusicTextField(
                         text = "Create song",
                         color = LocalThemeColor.current.white.copy(alpha = 0.2f)
                     )
-                } else {
-                    innerTextField()
                 }
+                innerTextField()
             }
         },
     )

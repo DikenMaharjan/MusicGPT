@@ -1,9 +1,9 @@
 package com.example.musicplayer.feature.generate_music.data.infrastructure.generator
 
 import com.example.musicplayer.feature.generate_music.data.infrastructure.data_source.InMemoryMusicDataSource
-import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationState
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
+import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationState
 import com.example.musicplayer.utils.coroutine.AppScope
 import com.example.musicplayer.utils.coroutine.createChildScope
 import dagger.assisted.Assisted
@@ -136,8 +136,8 @@ class MusicGenerationSession @AssistedInject constructor(
     }
 
     private fun generateTitleFromQuery(): String {
-        val words = prompt.split(" ").take(3)
-        val prefix = words.joinToString("") { it.replaceFirstChar { char -> char.uppercase() } }
+        val prefix = prompt.split(" ")
+            .joinToString("") { it.first().uppercase() }
         return "($prefix) Music"
     }
 

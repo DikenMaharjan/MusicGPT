@@ -14,3 +14,9 @@ val Primary1200 = Color(0xFFBFC2C8)
 val Primary5000 = Color(0xFFE4E6E8)
 
 val White = Color(0xFFFFFFFF)
+
+val LogoPurple = Color(0xFFC800FF)
+val LogoPink = Color(0xFFFF2C9B)
+val LogoOrange = Color(0xFFFF7B00)
+val LogoLightOrange = Color(0xFFFF8504)
+val LogoYellow = Color(0xFFFFD363)

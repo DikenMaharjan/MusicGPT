@@ -18,7 +18,12 @@ class ThemeColors(
         p1200 = Primary1200,
         p5000 = Primary5000,
     ),
-    val white: Color = White
+    val white: Color = White,
+    val logoPink: Color = LogoPink,
+    val logoPurple: Color = LogoPurple,
+    val logoOrange: Color = LogoOrange,
+    val logoLightOrange: Color = LogoLightOrange,
+    val logoYellow: Color = LogoYellow
 )
 
 @Immutable

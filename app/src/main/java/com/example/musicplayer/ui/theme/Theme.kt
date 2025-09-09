@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 
 
 private val appScheme = darkColorScheme(
+    primary = LogoOrange,
     background = Primary50,
     surface = Primary50,
     onSurface = Primary5000,

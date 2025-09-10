@@ -8,9 +8,14 @@ data class Music(
     val prompt: String,
     val image: ImageUrl,
     val song: SongUrl,
-    val createdAt: Instant
+    val createdAt: Instant,
 )
 
 
 typealias ImageUrl = String
-typealias SongUrl = String
+
+/***
+ * We are using sweepFactor in [com.example.musicplayer.feature.music_player.infrastructure.SoothingSoundPlayer]
+ * to distinguish different audios
+ */
+typealias SongUrl = Double

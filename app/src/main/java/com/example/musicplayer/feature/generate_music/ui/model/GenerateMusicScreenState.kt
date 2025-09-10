@@ -1,8 +1,8 @@
 package com.example.musicplayer.feature.generate_music.ui.model
 
 import androidx.compose.runtime.Immutable
-import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
 import com.example.musicplayer.feature.generate_music.data.model.Music
+import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
 
 @Immutable
 class GenerateMusicScreenState(
@@ -12,12 +12,12 @@ class GenerateMusicScreenState(
 
 sealed class GenerateMusicListItem {
     @Immutable
-    class MusicItem(
+    data class MusicItem(
         val music: Music
     ) : GenerateMusicListItem()
 
     @Immutable
-    class GeneratingItem(
+    data class GeneratingItem(
         val musicGenerationRecord: MusicGenerationRecord
     ) : GenerateMusicListItem()
 }

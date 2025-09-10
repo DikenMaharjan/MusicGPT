@@ -64,7 +64,7 @@ class MusicGenerationSession @AssistedInject constructor(
             val generatedMusic = Music(
                 title = generateTitleFromQuery(),
                 prompt = prompt,
-                song = "www.musicgpt.com/$id",
+                song = Random.nextDouble(),
                 image = "https://picsum.photos/id/${Random.nextInt(1000)}",
                 createdAt = java.time.Instant.now(),
                 id = id

@@ -85,7 +85,7 @@ private fun MusicItemPreview() {
             title = "In the style of Vivaldi",
             prompt = "A cheerful and uplifting orchestral piece in the style of Vivaldi, featuring a solo violin.",
             image = "https://cdn.openai.com/audio/sunos/v0/2023-10-25-17-02-53/images/image.png",
-            song = "https://cdn.openai.com/audio/sunos/v0/2023-10-25-17-02-53/audio.mp3",
+            song = 0.234,
             createdAt = Instant.parse("2023-10-25T17:02:53Z")
         )
         MusicItem(music = music)

@@ -25,6 +25,7 @@ import com.example.musicplayer.feature.generate_music.ui.component.floating_play
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui_core.modifier.removeFocusOnClick
+import com.example.musicplayer.ui_core.modifier.swipe_to_dismiss.swipeToDismiss
 
 @Composable
 fun GenerateMusicScreen(
@@ -89,7 +90,9 @@ private fun GenerateMusicContent(
             ) { playerState ->
                 if (playerState != null) {
                     FloatingPlayerView(
-                        modifier = Modifier.padding(LocalSpacing.current.dimen4),
+                        modifier = Modifier
+                            .padding(LocalSpacing.current.dimen4)
+                            .swipeToDismiss(onDismiss = musicControlActions.dismiss),
                         isPlaying = playerState.isPlaying,
                         music = playerState.selectedMusic,
                         musicControlActions = musicControlActions

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,11 +48,10 @@ fun GenerateMusicScreen(
             generateMusic = viewModel::generateMusic,
             playMusic = viewModel::play,
             musicControlActions = MusicControlActions(
-                playPrevious = viewModel::playPrevious,
-                playNext = viewModel::playNext,
                 pause = viewModel::pause,
                 play = viewModel::play,
-                dismiss = viewModel::dismissPlayer
+                dismiss = viewModel::dismissPlayer,
+                playMusic = viewModel::play
             )
         )
     }
@@ -91,7 +91,9 @@ private fun GenerateMusicContent(
                             .swipeToDismiss(onDismiss = musicControlActions.dismiss),
                         isPlaying = playerState.isPlaying,
                         music = playerState.selectedMusic,
-                        musicControlActions = musicControlActions
+                        musicControlActions = musicControlActions,
+                        nextMusic = remember(state) { state.getNextMusic() },
+                        prevMusic = remember(state) { state.getPreviousMusic() }
                     )
                 }
             )

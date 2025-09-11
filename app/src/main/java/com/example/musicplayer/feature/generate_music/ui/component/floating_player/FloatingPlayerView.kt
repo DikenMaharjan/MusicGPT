@@ -39,6 +39,8 @@ fun FloatingPlayerView(
     modifier: Modifier = Modifier,
     isPlaying: Boolean,
     music: Music,
+    nextMusic: Music?,
+    prevMusic: Music?,
     musicControlActions: MusicControlActions
 ) {
     val shape = MaterialTheme.shapes.large
@@ -77,7 +79,9 @@ fun FloatingPlayerView(
         )
         MusicControlsRow(
             isPlaying = isPlaying,
-            musicControlActions = musicControlActions
+            musicControlActions = musicControlActions,
+            next = nextMusic,
+            previous = prevMusic
         )
     }
 }
@@ -87,7 +91,9 @@ fun FloatingPlayerView(
 private fun MusicControlsRow(
     modifier: Modifier = Modifier,
     isPlaying: Boolean,
-    musicControlActions: MusicControlActions
+    musicControlActions: MusicControlActions,
+    next: Music?,
+    previous: Music?
 ) {
     Row(
         modifier = modifier,
@@ -95,7 +101,12 @@ private fun MusicControlsRow(
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
     ) {
         IconButton(
-            onClick = musicControlActions.playPrevious
+            onClick = {
+                if (previous != null) {
+                    musicControlActions.playMusic(previous)
+                }
+            },
+            enabled = previous != null
         ) {
             Icon(
                 imageVector = Icons.Default.SkipPrevious,
@@ -123,7 +134,12 @@ private fun MusicControlsRow(
         }
     }
     IconButton(
-        onClick = musicControlActions.playNext
+        onClick = {
+            if (next != null) {
+                musicControlActions.playMusic(next)
+            }
+        },
+        enabled = next != null
     ) {
         Icon(
             imageVector = Icons.Default.SkipNext,
@@ -133,9 +149,8 @@ private fun MusicControlsRow(
 }
 
 data class MusicControlActions(
-    val playPrevious: () -> Unit,
-    val playNext: () -> Unit,
     val pause: () -> Unit,
+    val playMusic: (Music) -> Unit,
     val play: () -> Unit,
     val dismiss: () -> Unit
 )
@@ -156,12 +171,14 @@ fun FloatingPlayerViewPreview(
                 createdAt = Instant.now()
             )
         }
-        val musicControlActions = remember { MusicControlActions({}, {}, {}, {}, {}) }
+        val musicControlActions = remember { MusicControlActions({}, {}, {}, {}) }
 
         FloatingPlayerView(
             isPlaying = isPlaying,
             music = music,
-            musicControlActions = musicControlActions
+            musicControlActions = musicControlActions,
+            nextMusic = music,
+            prevMusic = null
         )
     }
 }

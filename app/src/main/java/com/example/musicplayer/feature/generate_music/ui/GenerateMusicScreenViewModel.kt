@@ -43,13 +43,6 @@ class GenerateMusicScreenViewModel @Inject constructor(
         musicController.pause()
     }
 
-    fun playNext() {
-
-    }
-
-    fun playPrevious() {
-
-    }
 
     fun dismissPlayer() {
         musicController.dismiss()

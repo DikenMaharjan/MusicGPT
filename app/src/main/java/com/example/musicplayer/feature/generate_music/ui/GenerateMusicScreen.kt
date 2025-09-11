@@ -1,5 +1,7 @@
 package com.example.musicplayer.feature.generate_music.ui
 
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -80,6 +82,8 @@ private fun GenerateMusicContent(
             )
             NullableValueVisibility(
                 value = state.musicPlayerState,
+                enter = expandVertically(expandFrom = Alignment.Top),
+                exit = shrinkVertically(),
                 content = { playerState ->
                     FloatingPlayerView(
                         modifier = Modifier

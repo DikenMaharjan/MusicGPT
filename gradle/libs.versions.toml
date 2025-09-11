@@ -39,6 +39,8 @@ hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.re
 
 # Coil
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
+coil3-coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

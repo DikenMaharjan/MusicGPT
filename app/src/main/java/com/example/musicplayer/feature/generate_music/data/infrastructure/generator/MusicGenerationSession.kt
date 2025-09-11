@@ -142,7 +142,7 @@ class MusicGenerationSession @AssistedInject constructor(
     }
 
     companion object {
-        fun getRandomAlbumImage() = "https://picsum.photos/id/${Random.nextInt(1000)}"
+        fun getRandomAlbumImage() = "https://picsum.photos/id/${Random.nextInt(1000)}/300"
     }
 }
 

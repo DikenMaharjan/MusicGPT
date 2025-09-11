@@ -55,7 +55,6 @@ dependencies {
 
     // Haze
     implementation(libs.haze)
-
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
@@ -63,7 +62,8 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
-    
+    implementation(libs.coil3.coil.network.okhttp)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

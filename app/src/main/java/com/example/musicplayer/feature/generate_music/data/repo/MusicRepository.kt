@@ -7,6 +7,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,8 +27,12 @@ class MusicRepository @Inject constructor(
         val records = sessions.map {
             it.musicGenerationRecord
         }
-        combine(records) { musicsBeingGenerated ->
-            musicsBeingGenerated.toList()
+        if (records.isEmpty()) {
+            flowOf(listOf())
+        } else {
+            combine(records) { musicsBeingGenerated ->
+                musicsBeingGenerated.toList()
+            }
         }
     }
 

@@ -65,7 +65,7 @@ class MusicGenerationSession @AssistedInject constructor(
                 title = generateTitleFromQuery(),
                 prompt = prompt,
                 song = Random.nextDouble(),
-                image = "https://picsum.photos/id/${Random.nextInt(1000)}",
+                image = getRandomAlbumImage(),
                 createdAt = java.time.Instant.now(),
                 id = id
             )
@@ -141,6 +141,9 @@ class MusicGenerationSession @AssistedInject constructor(
         return "($prefix) Music"
     }
 
+    companion object {
+        fun getRandomAlbumImage() = "https://picsum.photos/id/${Random.nextInt(1000)}"
+    }
 }
 
 @AssistedFactory

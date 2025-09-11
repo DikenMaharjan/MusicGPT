@@ -141,6 +141,7 @@ class MusicGenerationSession @AssistedInject constructor(
 
     private fun generateTitleFromQuery(): String {
         val prefix = prompt.split(" ")
+            .filter { it.isNotBlank() }
             .joinToString("") { it.first().uppercase() }
         return "($prefix) Music"
     }

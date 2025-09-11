@@ -20,8 +20,13 @@ class GenerateMusicScreenStateProducer @Inject constructor(
         musicRepository.musicGenerationRecords,
         musicController.musicPlayerState
     ) { musics, musicGenerationRecords, musicPlayerState ->
+        val currentlyPlaying = musicPlayerState
+            .selectedContent
+            ?.takeIf {
+                musicPlayerState.playing
+            }
         val sortedMusicItems = musics.map { music ->
-            music.toListItem()
+            music.toListItem(isPlaying = currentlyPlaying?.id == music.id)
         }
         val sortedGeneratingItems = musicGenerationRecords.getGeneratingItems(musics)
         GenerateMusicScreenState(
@@ -45,9 +50,10 @@ class GenerateMusicScreenStateProducer @Inject constructor(
         generatingMusic.toListItem()
     }
 
-    private fun Music.toListItem(): GenerateMusicListItem.MusicItem {
+    private fun Music.toListItem(isPlaying: Boolean): GenerateMusicListItem.MusicItem {
         return GenerateMusicListItem.MusicItem(
-            music = this
+            music = this,
+            isPlaying = isPlaying
         )
     }
 

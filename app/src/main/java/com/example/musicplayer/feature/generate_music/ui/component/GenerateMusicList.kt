@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicplayer.feature.generate_music.data.model.Music
+import com.example.musicplayer.feature.generate_music.ui.component.music_item.MusicItem
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicListItem
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
 
@@ -31,7 +32,7 @@ fun GenerateMusicList(
                     modifier = Modifier.clickable {
                         playMusic(item.music)
                     },
-                    music = item.music
+                    musicItem = item
                 )
             }
         }

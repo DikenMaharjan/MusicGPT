@@ -19,7 +19,8 @@ data class MusicPlayerState(
 sealed class GenerateMusicListItem {
     @Immutable
     data class MusicItem(
-        val music: Music
+        val music: Music,
+        val isPlaying: Boolean
     ) : GenerateMusicListItem()
 
     @Immutable

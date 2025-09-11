@@ -17,6 +17,7 @@ class SoothingSoundPlayer @Inject constructor() {
 
     fun play(sweepFactor: Double) {
         if (currentSweepFactor.get() == sweepFactor) return
+        stop()
         currentSweepFactor.set(sweepFactor)
         playerThread = thread(start = true) {
             playLoop(sweepFactor)

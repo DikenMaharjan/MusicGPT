@@ -11,4 +11,14 @@
 
     <string name="music_item_more_icon_description">More Icon</string>
     <string name="create_music_text_field_send_button_description">Send Icon</string>
+
+    <string name="music_generation_state_adding_instruments">Adding a variety of instruments to the mix.</string>
+    <string name="music_generation_state_cancelled">Music generation has been cancelled.</string>
+    <string name="music_generation_state_completed">Your music track has been successfully generated.</string>
+    <string name="music_generation_state_failed">Unfortunately, the music generation failed. Please try again.</string>
+    <string name="music_generation_state_finalizing">Finalizing the music track, almost there!</string>
+    <string name="music_generation_state_generating_melody">Composing a beautiful melody for your track.</string>
+    <string name="music_generation_state_generating_rhythm">Laying down a groovy rhythm for your music.</string>
+    <string name="music_generation_state_initializing">Initializing the music generation process.</string>
+    <string name="music_generation_state_processing_prompt">Processing your prompt to understand the desired music style.</string>
 </resources>

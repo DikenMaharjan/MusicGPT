@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.material.icons)
 
+    // Haze
+    implementation(libs.haze)
+
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

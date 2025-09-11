@@ -40,26 +40,30 @@ class MusicGenerationSession @AssistedInject constructor(
     val musicGenerationRecord = _musicGenerationRecord.asStateFlow()
     fun start() {
         scope.launch {
-            val timeTaken = measureTime {
-                processPrompt()
-                generateMelody()
-                generateRhythm()
-                addInstruments()
-                finalizeMusic()
+            try {
+                val timeTaken = measureTime {
+                    processPrompt()
+                    generateMelody()
+                    generateRhythm()
+                    addInstruments()
+                    finalizeMusic()
+                }
+                completeGeneration(timeTaken = timeTaken)
+            } catch (e: Exception) {
+                setProgressAndState(
+                    progress = 0f,
+                    state = MusicGenerationState.Failed(
+                        errorMessage = e.message ?: "Generation Failed"
+                    )
+                )
             }
-            completeGeneration(timeTaken = timeTaken)
         }
     }
 
     private fun completeGeneration(timeTaken: Duration) {
         // Simulate 10% chance of failure.
         if (Math.random() < 0.1) {
-            setProgressAndState(
-                progress = 0f,
-                state = MusicGenerationState.Failed(
-                    errorMessage = "Generation failed."
-                )
-            )
+            error("Simulated failure.")
         } else {
             val generatedMusic = Music(
                 title = generateTitleFromQuery(),

@@ -6,9 +6,15 @@ import com.example.musicplayer.feature.generate_music.data.model.MusicGeneration
 
 @Immutable
 class GenerateMusicScreenState(
-    val items: List<GenerateMusicListItem> = listOf()
+    val items: List<GenerateMusicListItem> = listOf(),
+    val musicPlayerState: MusicPlayerState? = null
 )
 
+@Immutable
+data class MusicPlayerState(
+    val selectedMusic: Music,
+    val isPlaying: Boolean
+)
 
 sealed class GenerateMusicListItem {
     @Immutable

@@ -34,4 +34,24 @@ class GenerateMusicScreenViewModel @Inject constructor(
     fun play(music: Music) {
         musicController.play(audioContent = AudioContent(id = music.id, sweepFactor = music.song))
     }
+
+    fun play() {
+        musicController.play()
+    }
+
+    fun pause() {
+        musicController.pause()
+    }
+
+    fun playNext() {
+
+    }
+
+    fun playPrevious() {
+
+    }
+
+    fun dismissPlayer() {
+        musicController.dismiss()
+    }
 }

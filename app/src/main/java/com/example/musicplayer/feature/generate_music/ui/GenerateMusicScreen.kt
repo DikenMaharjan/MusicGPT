@@ -1,9 +1,5 @@
 package com.example.musicplayer.feature.generate_music.ui
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +20,7 @@ import com.example.musicplayer.feature.generate_music.ui.component.floating_play
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.MusicControlActions
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
 import com.example.musicplayer.ui.theme.LocalSpacing
+import com.example.musicplayer.ui_core.components.animation.NullableValueVisibility
 import com.example.musicplayer.ui_core.modifier.removeFocusOnClick
 import com.example.musicplayer.ui_core.modifier.swipe_to_dismiss.swipeToDismiss
 
@@ -81,14 +78,9 @@ private fun GenerateMusicContent(
             CreateMusicView(
                 generateMusic = generateMusic
             )
-            AnimatedContent(
-                state.musicPlayerState,
-                transitionSpec = {
-                    slideInVertically() togetherWith slideOutVertically() using null
-                },
-                contentKey = { it != null }
-            ) { playerState ->
-                if (playerState != null) {
+            NullableValueVisibility(
+                value = state.musicPlayerState,
+                content = { playerState ->
                     FloatingPlayerView(
                         modifier = Modifier
                             .padding(LocalSpacing.current.dimen4)
@@ -98,7 +90,7 @@ private fun GenerateMusicContent(
                         musicControlActions = musicControlActions
                     )
                 }
-            }
+            )
         }
     }
 }

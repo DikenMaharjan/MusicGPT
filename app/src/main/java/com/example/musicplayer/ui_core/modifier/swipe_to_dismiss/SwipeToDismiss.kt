@@ -25,7 +25,7 @@ fun Modifier.swipeToDismiss(
         )
     }
     LaunchedEffect(Unit) {
-        snapshotFlow { anchoredDraggableState.targetValue }
+        snapshotFlow { anchoredDraggableState.settledValue }
             .collectLatest {
                 if (it == SwipeToDismissAnchors.End) {
                     onDismiss()

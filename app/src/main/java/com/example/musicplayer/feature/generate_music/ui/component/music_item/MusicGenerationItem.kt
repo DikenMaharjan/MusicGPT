@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +37,8 @@ import com.example.musicplayer.ui.theme.PreviewTheme
 @Composable
 fun MusicGenerationItem(
     modifier: Modifier = Modifier,
-    generationRecord: MusicGenerationRecord
+    generationRecord: MusicGenerationRecord,
+    retryGeneration: (MusicGenerationRecord) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -62,21 +67,33 @@ fun MusicGenerationItem(
                     color = LocalThemeColor.current.primary.p1100
                 )
             }
-            Text(
-                modifier = Modifier
-                    .border(
-                        width = LocalSpacing.current.dimen2,
-                        color = LocalThemeColor.current.primary.p800,
-                        shape = MaterialTheme.shapes.extraLarge
-
+            if (generationRecord.state is MusicGenerationState.Failed) {
+                IconButton(
+                    onClick = { retryGeneration(generationRecord) }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        tint = Color.Red,
+                        contentDescription = "Retry"
                     )
-                    .padding(
-                        horizontal = LocalSpacing.current.dimen18,
-                        vertical = LocalSpacing.current.dimen8
-                    ),
-                text = "v${generationRecord.version}",
-                style = MaterialTheme.typography.labelLarge
-            )
+                }
+            } else {
+                Text(
+                    modifier = Modifier
+                        .border(
+                            width = LocalSpacing.current.dimen2,
+                            color = LocalThemeColor.current.primary.p800,
+                            shape = MaterialTheme.shapes.extraLarge
+
+                        )
+                        .padding(
+                            horizontal = LocalSpacing.current.dimen18,
+                            vertical = LocalSpacing.current.dimen8
+                        ),
+                    text = "v${generationRecord.version}",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
         }
     }
 }
@@ -143,7 +160,25 @@ fun MusicGenerationItemPreview() {
                 prompt = "A funky beat",
                 progress = 0.5f,
                 state = MusicGenerationState.ProcessingPrompt
-            )
+            ),
+            retryGeneration = {} // Added dummy lambda for preview
         )
     }
 }
+
+@Preview
+@Composable
+fun MusicGenerationItemFailedPreview() { // Added a preview for the failed state
+    PreviewTheme {
+        MusicGenerationItem(
+            generationRecord = MusicGenerationRecord(
+                id = "124",
+                prompt = "A sad piano melody",
+                progress = 0.2f,
+                state = MusicGenerationState.Failed("Something went wrong")
+            ),
+            retryGeneration = {}
+        )
+    }
+}
+

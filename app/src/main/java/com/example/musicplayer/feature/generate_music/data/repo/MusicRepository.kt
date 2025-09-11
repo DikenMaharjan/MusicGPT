@@ -3,6 +3,7 @@ package com.example.musicplayer.feature.generate_music.data.repo
 import com.example.musicplayer.feature.generate_music.data.infrastructure.data_source.InMemoryMusicDataSource
 import com.example.musicplayer.feature.generate_music.data.infrastructure.generator.MusicGenerationSession
 import com.example.musicplayer.feature.generate_music.data.infrastructure.generator.MusicGenerationSessionFactory
+import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -20,12 +21,12 @@ class MusicRepository @Inject constructor(
 ) {
 
     val musics = inMemoryMusicDataSource.musics
-    private val _musicGenerationSessions = MutableStateFlow(listOf<MusicGenerationSession>())
+    private val _musicGenerationSessions = MutableStateFlow(mapOf<String, MusicGenerationSession>())
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val musicGenerationRecords = _musicGenerationSessions.flatMapLatest { sessions ->
         val records = sessions.map {
-            it.musicGenerationRecord
+            it.value.musicGenerationRecord
         }
         if (records.isEmpty()) {
             flowOf(listOf())
@@ -40,8 +41,11 @@ class MusicRepository @Inject constructor(
         val session = musicGenerationSessionFactory.create(prompt)
         session.start()
         _musicGenerationSessions.update { initial ->
-            initial + session
+            initial + (session.id to session)
         }
     }
 
+    fun retryGeneration(musicGenerationRecord: MusicGenerationRecord) {
+        _musicGenerationSessions.value[musicGenerationRecord.id]?.retry()
+    }
 }

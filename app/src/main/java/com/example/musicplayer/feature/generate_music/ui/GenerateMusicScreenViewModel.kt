@@ -3,6 +3,7 @@ package com.example.musicplayer.feature.generate_music.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicplayer.feature.generate_music.data.model.Music
+import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
 import com.example.musicplayer.feature.generate_music.data.repo.MusicRepository
 import com.example.musicplayer.feature.generate_music.ui.api.GenerateMusicScreenStateProducer
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
@@ -29,6 +30,10 @@ class GenerateMusicScreenViewModel @Inject constructor(
 
     fun generateMusic(query: String) {
         musicRepository.generateMusic(query)
+    }
+
+    fun retryGeneration(generationRecord: MusicGenerationRecord) {
+        musicRepository.retryGeneration(generationRecord)
     }
 
     fun play(music: Music) {

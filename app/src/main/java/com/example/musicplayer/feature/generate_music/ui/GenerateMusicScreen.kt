@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.musicplayer.feature.generate_music.data.model.Music
+import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicList
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicTopBar
 import com.example.musicplayer.feature.generate_music.ui.component.create_music.CreateMusicView
@@ -47,6 +48,7 @@ fun GenerateMusicScreen(
             state = state,
             generateMusic = viewModel::generateMusic,
             playMusic = viewModel::play,
+            retryGeneration = viewModel::retryGeneration,
             musicControlActions = MusicControlActions(
                 pause = viewModel::pause,
                 play = viewModel::play,
@@ -63,6 +65,7 @@ private fun GenerateMusicContent(
     state: GenerateMusicScreenState,
     generateMusic: (String) -> Unit,
     playMusic: (Music) -> Unit,
+    retryGeneration: (MusicGenerationRecord) -> Unit,
     musicControlActions: MusicControlActions
 ) {
     Box(
@@ -70,7 +73,8 @@ private fun GenerateMusicContent(
     ) {
         GenerateMusicList(
             state = state,
-            playMusic = playMusic
+            playMusic = playMusic,
+            retryGeneration = retryGeneration
         )
         Column(
             modifier = Modifier.align(Alignment.BottomCenter),

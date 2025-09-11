@@ -26,7 +26,7 @@ class MusicGenerationSession @AssistedInject constructor(
     private val inMemoryMusicDataSource: InMemoryMusicDataSource
 ) {
 
-    private val id = UUID.randomUUID().toString()
+    val id = UUID.randomUUID().toString()
 
     private val scope = appScope.createChildScope { Job(it) }
 
@@ -144,6 +144,11 @@ class MusicGenerationSession @AssistedInject constructor(
             .filter { it.isNotBlank() }
             .joinToString("") { it.first().uppercase() }
         return "($prefix) Music"
+    }
+
+    fun retry() {
+        _musicGenerationRecord.update { it.copy(version = it.version + 1) }
+        start()
     }
 
     companion object {

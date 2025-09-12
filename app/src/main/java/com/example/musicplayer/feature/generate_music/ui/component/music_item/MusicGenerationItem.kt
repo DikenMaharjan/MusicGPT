@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
@@ -47,20 +46,18 @@ fun MusicGenerationItem(
         animationSpec = tween(4000)
     )
 
-    Box(
+    BackgroundProgressLayout(
         modifier = modifier.fillMaxWidth(),
+        progress = animatedProgress
     ) {
-        BackgroundProgressBar(
-            progress = animatedProgress
-        )
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(LocalSpacing.current.dimen8),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
+            horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen12)
         ) {
             GenerationProgressView(
-                modifier = Modifier.padding(LocalSpacing.current.dimen8),
                 progress = animatedProgress
             )
             Column(
@@ -101,7 +98,6 @@ fun MusicGenerationItem(
                     style = MaterialTheme.typography.labelLarge
                 )
             }
-            Spacer(modifier = Modifier.width(LocalSpacing.current.dimen4))
         }
     }
 }
@@ -122,38 +118,43 @@ private val MusicGenerationState.msg: String
     }
 
 @Composable
-private fun BoxScope.BackgroundProgressBar(
+private fun BackgroundProgressLayout(
     modifier: Modifier = Modifier,
-    progress: Float
+    progress: Float,
+    content: @Composable BoxScope.() -> Unit
 ) {
-    Spacer(
-        modifier = modifier
-            .matchParentSize()
-            .align(Alignment.CenterStart)
-            .background(
-                brush = Brush.horizontalGradient(
-                    0f to LocalThemeColor.current.primary.p100,
-                    (progress - 0.1f).coerceAtLeast(0f) to LocalThemeColor.current.primary.p100,
-                    (progress + 0.1f).coerceAtMost(1f) to Color.Transparent,
-                    1f to Color.Transparent
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Spacer(
+            modifier = modifier
+                .matchParentSize()
+                .align(Alignment.CenterStart)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        0f to LocalThemeColor.current.primary.p100,
+                        (progress - 0.1f).coerceAtLeast(0f) to LocalThemeColor.current.primary.p100,
+                        (progress + 0.1f).coerceAtMost(1f) to Color.Transparent,
+                        1f to Color.Transparent
+                    )
                 )
-            )
-    )
+        )
+        content()
+    }
 }
 
 @Preview
 @Composable
 private fun BackgroundProgressBarPreview() {
     PreviewTheme {
-        Box(
+        BackgroundProgressLayout(
             modifier = Modifier.size(100.dp, 50.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            BackgroundProgressBar(
-                progress = 0.5f
-            )
-            Text(text = "Preview Item")
-        }
+            progress = 0.5f,
+            content = {
+                Text(text = "Preview Item")
+            }
+        )
     }
 }
 

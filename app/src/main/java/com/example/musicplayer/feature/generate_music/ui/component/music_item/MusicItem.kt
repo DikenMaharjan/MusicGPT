@@ -38,13 +38,14 @@ fun MusicItem(
 ) {
     val music = musicItem.music
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(LocalSpacing.current.dimen8),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
+        horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen12)
     ) {
         Box(
             modifier = Modifier
-                .padding(LocalSpacing.current.dimen8)
                 .clip(MaterialTheme.shapes.medium),
             contentAlignment = Alignment.Center
         ) {
@@ -107,5 +108,4 @@ private fun MusicItemPreview() {
             )
         )
     }
-
 }

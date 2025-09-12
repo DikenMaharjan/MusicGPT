@@ -89,10 +89,10 @@ private fun CrossfadeImageSequence(
     ) {
         listOf(
             (disappearingImage.image to (1 - localProgress)),
-            appearingImage to localProgress
+            appearingImage.image to localProgress
         ).forEach { (image, alpha) ->
             Image(
-                painter = painterResource(disappearingImage.image),
+                painter = painterResource(image),
                 contentDescription = null,
                 modifier = Modifier
                     .matchParentSize()

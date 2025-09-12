@@ -27,7 +27,6 @@ import com.example.musicplayer.feature.generate_music.ui.component.floating_play
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui_core.components.animation.NullableValueVisibility
-import com.example.musicplayer.ui_core.components.tap_to_remove_focus.TapToRemoveFocusLayout
 import com.example.musicplayer.ui_core.modifier.swipe_to_dismiss.swipeToDismiss
 
 @Composable
@@ -36,30 +35,26 @@ fun GenerateMusicScreen(
     viewModel: GenerateMusicScreenViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    TapToRemoveFocusLayout(
-        modifier = modifier
-            .fillMaxSize(),
-    ) {
-        Scaffold(
-            topBar = {
-                GenerateMusicTopBar()
-            },
-        ) { padding ->
-            GenerateMusicContent(
-                modifier = Modifier
-                    .padding(padding),
-                state = state,
-                generateMusic = viewModel::generateMusic,
-                playMusic = viewModel::play,
-                retryGeneration = viewModel::retryGeneration,
-                musicControlActions = MusicControlActions(
-                    pause = viewModel::pause,
-                    play = viewModel::play,
-                    dismiss = viewModel::dismissPlayer,
-                    playMusic = viewModel::play
-                )
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = {
+            GenerateMusicTopBar()
+        },
+    ) { padding ->
+        GenerateMusicContent(
+            modifier = Modifier
+                .padding(padding),
+            state = state,
+            generateMusic = viewModel::generateMusic,
+            playMusic = viewModel::play,
+            retryGeneration = viewModel::retryGeneration,
+            musicControlActions = MusicControlActions(
+                pause = viewModel::pause,
+                play = viewModel::play,
+                dismiss = viewModel::dismissPlayer,
+                playMusic = viewModel::play
             )
-        }
+        )
     }
 }
 

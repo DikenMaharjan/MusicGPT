@@ -8,17 +8,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.musicplayer.feature.generate_music.ui.GenerateMusicScreen
-import com.example.musicplayer.feature.generate_music.ui.component.floating_player.ProvideFloatingPlayerInsets
 import com.example.musicplayer.navigation.component.bottom_bar.AppBottomBar
 import com.example.musicplayer.navigation.component.bottom_bar.GenerateMusicRoute
+import com.example.musicplayer.ui_core.components.layout.AppContainer
 
 @Composable
 fun AppContent(
     modifier: Modifier = Modifier
 ) {
-    ProvideFloatingPlayerInsets {
+    AppContainer(
+        modifier = modifier.fillMaxSize()
+    ) {
         Scaffold(
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             bottomBar = {
                 AppBottomBar(
                     selectedRoute = GenerateMusicRoute

@@ -4,6 +4,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -21,9 +22,10 @@ import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusic
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicTopBar
 import com.example.musicplayer.feature.generate_music.ui.component.create_music.CreateMusicView
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.FloatingPlayerView
-import com.example.musicplayer.feature.generate_music.ui.component.floating_player.LocalFloatingPlayerInsets
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.MusicControlActions
-import com.example.musicplayer.feature.generate_music.ui.component.floating_player.floatingPlayerInsets
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.ProvideCustomBottomInsets
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.customBottomInsets
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.rememberCustomBottomInsets
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui_core.components.animation.NullableValueVisibility
@@ -68,27 +70,35 @@ private fun GenerateMusicContent(
     retryGeneration: (MusicGenerationRecord) -> Unit,
     musicControlActions: MusicControlActions
 ) {
+    val createMusicViewInsets = rememberCustomBottomInsets()
     Box(
         modifier = modifier
             .fillMaxSize()
     ) {
-        GenerateMusicList(
-            state = state,
-            playMusic = playMusic,
-            retryGeneration = retryGeneration
-        )
+        ProvideCustomBottomInsets(
+            customBottomInsets = createMusicViewInsets
+        ) {
+            GenerateMusicList(
+                state = state,
+                playMusic = playMusic,
+                retryGeneration = retryGeneration
+            )
+        }
+        val floatingPlayerInsets = rememberCustomBottomInsets()
         CreateMusicView(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .floatingPlayerInsets(),
+                .customBottomInsets(floatingPlayerInsets)
+                .onGloballyPositioned { coord ->
+                    createMusicViewInsets.setLayoutPosition(coord)
+                },
             generateMusic = generateMusic
         )
-        val localFloatingPlayerInsets = LocalFloatingPlayerInsets.current
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .onGloballyPositioned { coord ->
-                    localFloatingPlayerInsets.setPlayerPosition(coord)
+                    floatingPlayerInsets.setLayoutPosition(coord)
                 }
         ) {
             NullableValueVisibility(

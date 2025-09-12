@@ -3,12 +3,11 @@ package com.example.musicplayer.feature.generate_music.ui.component.floating_pla
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.MutableWindowInsets
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.findRootCoordinates
@@ -16,45 +15,51 @@ import androidx.compose.ui.layout.positionInRoot
 
 
 @OptIn(ExperimentalLayoutApi::class)
-class FloatingPlayerInsets(
+class CustomBottomInsets(
     private val mutableInset: MutableWindowInsets = MutableWindowInsets()
 ) : WindowInsets by mutableInset {
 
-    fun setPlayerPosition(layoutCoordinates: LayoutCoordinates) {
+    fun setLayoutPosition(layoutCoordinates: LayoutCoordinates) {
         val rootCoordinates = layoutCoordinates.findRootCoordinates()
         val rootHeight = rootCoordinates.size.height
         val yPos = layoutCoordinates.positionInRoot().y
         mutableInset.insets = WindowInsets(bottom = rootHeight - yPos.toInt())
     }
+
+    companion object {
+        val BottomInsets
+            @Composable
+            get() = LocalCustomBottomInsets.current
+    }
 }
 
-val LocalFloatingPlayerInsets =
-    staticCompositionLocalOf<FloatingPlayerInsets> { error("No FloatingPlayerInsets provider") }
+val LocalCustomBottomInsets =
+    compositionLocalOf<CustomBottomInsets> { error("No CustomBottomInsets provider") }
 
 @Composable
-fun Modifier.floatingPlayerInsets(): Modifier {
-    val floatingPlayerInsets = LocalFloatingPlayerInsets.current
+fun Modifier.customBottomInsets(
+    bottomInsets: CustomBottomInsets
+): Modifier {
     return this
-        .windowInsetsPadding(floatingPlayerInsets)
-        .consumeWindowInsets(floatingPlayerInsets)
+        .windowInsetsPadding(bottomInsets)
 
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun rememberFloatingPlayerInset(): FloatingPlayerInsets {
+fun rememberCustomBottomInsets(): CustomBottomInsets {
     return remember {
-        FloatingPlayerInsets()
+        CustomBottomInsets()
     }
 }
 
 @Composable
-fun ProvideFloatingPlayerInsets(
-    bottomPlayerInsets: FloatingPlayerInsets = rememberFloatingPlayerInset(),
+fun ProvideCustomBottomInsets(
+    customBottomInsets: CustomBottomInsets,
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalFloatingPlayerInsets provides bottomPlayerInsets,
+        LocalCustomBottomInsets provides customBottomInsets,
         content = content
     )
 }

@@ -8,6 +8,7 @@ import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicList
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
 import com.example.musicplayer.feature.generate_music.ui.model.MusicPlayerState
 import com.example.musicplayer.feature.music_player.MusicController
+import com.example.musicplayer.feature.music_player.model.MusicControllerState
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
@@ -22,23 +23,19 @@ class GenerateMusicScreenStateProducer @Inject constructor(
     ) { musics, musicGenerationRecords, musicPlayerState ->
         val currentlyPlaying = musicPlayerState
             .selectedContent
-            ?.takeIf {
-                musicPlayerState.playing
-            }
-        val sortedMusicItems = musics.map { music ->
-            music.toListItem(isPlaying = currentlyPlaying?.id == music.id)
-        }
-        val sortedGeneratingItems = musicGenerationRecords.getGeneratingItems(musics)
+            ?.takeIf { musicPlayerState.playing }
+
+        val sortedMusicItems = musics
+            .sortedByDescending { it.createdAt }
+            .map { music -> music.toListItem(isPlaying = currentlyPlaying?.id == music.id) }
+
+        val sortedGeneratingItems = musicGenerationRecords
+            .sortedByDescending { it.createdAt }
+            .getGeneratingItems(musics)
+
         GenerateMusicScreenState(
             items = sortedGeneratingItems + sortedMusicItems,
-            musicPlayerState = musics
-                .firstOrNull { it.id == musicPlayerState.selectedContent?.id }
-                ?.let {
-                    MusicPlayerState(
-                        selectedMusic = it,
-                        isPlaying = musicPlayerState.playing
-                    )
-                }
+            musicPlayerState = musics.getMusicPlayerContent(musicPlayerState)
         )
     }
 
@@ -48,6 +45,16 @@ class GenerateMusicScreenStateProducer @Inject constructor(
         record.state !is MusicGenerationState.Completed || record.state.music !in musics
     }.map { generatingMusic ->
         generatingMusic.toListItem()
+    }
+
+    private fun List<Music>.getMusicPlayerContent(musicControllerState: MusicControllerState): MusicPlayerState? {
+        return firstOrNull { it.id == musicControllerState.selectedContent?.id }
+            ?.let { selectedMusic ->
+                MusicPlayerState(
+                    selectedMusic = selectedMusic,
+                    isPlaying = musicControllerState.playing
+                )
+            }
     }
 
     private fun Music.toListItem(isPlaying: Boolean): GenerateMusicListItem.MusicItem {

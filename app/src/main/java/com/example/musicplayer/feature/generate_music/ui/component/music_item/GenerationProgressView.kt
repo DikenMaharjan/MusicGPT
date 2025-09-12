@@ -35,12 +35,12 @@ fun GenerationProgressView(
     ) {
         CrossfadeImageSequence(
             images = listOf(
-                R.drawable.property_1_0 with 0f,
-                R.drawable.property_1_25 with 0.25f,
-                R.drawable.property_1_50 with 0.5f,
-                R.drawable.property_1_75 with 0.75f,
-                R.drawable.property_1_90 with 0.9f,
-                R.drawable.property_1_100 with 1f
+                R.drawable.property_1_0 forProgress 0f,
+                R.drawable.property_1_25 forProgress 0.25f,
+                R.drawable.property_1_50 forProgress 0.5f,
+                R.drawable.property_1_75 forProgress 0.75f,
+                R.drawable.property_1_90 forProgress 0.9f,
+                R.drawable.property_1_100 forProgress 1f
             ),
             progress = progress
         )
@@ -56,7 +56,7 @@ data class ImageWithProgress(
     val progress: Float
 )
 
-infix fun Int.with(progress: Float) = ImageWithProgress(this, progress)
+infix fun Int.forProgress(progress: Float) = ImageWithProgress(this, progress)
 
 @Composable
 private fun CrossfadeImageSequence(

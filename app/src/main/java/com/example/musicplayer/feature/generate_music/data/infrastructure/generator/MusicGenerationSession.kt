@@ -42,6 +42,7 @@ class MusicGenerationSession @AssistedInject constructor(
         scope.launch {
             try {
                 val timeTaken = measureTime {
+                    initialize()
                     processPrompt()
                     generateMelody()
                     generateRhythm()
@@ -58,6 +59,10 @@ class MusicGenerationSession @AssistedInject constructor(
                 )
             }
         }
+    }
+
+    private fun initialize() {
+        setProgressAndState(0f, MusicGenerationState.Initializing)
     }
 
     private fun completeGeneration(timeTaken: Duration) {
@@ -85,7 +90,8 @@ class MusicGenerationSession @AssistedInject constructor(
         }
     }
 
-    private fun processPrompt() {
+    private suspend fun processPrompt() {
+        randomDelay()
         setProgressAndState(
             progress = 0.1f,
             state = MusicGenerationState.ProcessingPrompt,
@@ -93,7 +99,7 @@ class MusicGenerationSession @AssistedInject constructor(
     }
 
     private suspend fun generateMelody() {
-        delay(800)
+        randomDelay()
         setProgressAndState(
             progress = 0.1f,
             state = MusicGenerationState.GeneratingMelody,
@@ -102,7 +108,7 @@ class MusicGenerationSession @AssistedInject constructor(
     }
 
     private suspend fun generateRhythm() {
-        delay(1000)
+        randomDelay()
         setProgressAndState(
             progress = 0.5f,
             state = MusicGenerationState.GeneratingRhythm
@@ -111,7 +117,7 @@ class MusicGenerationSession @AssistedInject constructor(
 
     private suspend fun addInstruments() {
         for (instrumentCount in 1..3) {
-            delay(600)
+            randomDelay()
             setProgressAndState(
                 progress = 0.5f + (instrumentCount * 0.1f),
                 state = MusicGenerationState.AddingInstruments(
@@ -123,7 +129,7 @@ class MusicGenerationSession @AssistedInject constructor(
     }
 
     private suspend fun finalizeMusic() {
-        delay(400)
+        randomDelay()
         setProgressAndState(
             progress = 0.95f,
             state = MusicGenerationState.Finalizing
@@ -149,6 +155,10 @@ class MusicGenerationSession @AssistedInject constructor(
     fun retry() {
         _musicGenerationRecord.update { it.copy(version = it.version + 1) }
         start()
+    }
+
+    suspend fun randomDelay() {
+        delay(Random.nextLong(500, 2000))
     }
 
     companion object {

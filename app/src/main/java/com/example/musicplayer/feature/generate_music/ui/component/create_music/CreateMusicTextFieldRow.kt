@@ -49,6 +49,7 @@ import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui.theme.LocalThemeColor
 import com.example.musicplayer.ui.theme.PreviewTheme
+import com.example.musicplayer.ui_core.components.tap_to_remove_focus.clearFocusOnTap
 import kotlinx.coroutines.flow.dropWhile
 
 @Composable
@@ -76,6 +77,7 @@ fun CreateMusicTextFieldRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .clearFocusOnTap()
             .imePadding()
             .padding(LocalSpacing.current.dimen12)
             .dropShadow(

@@ -106,7 +106,9 @@ fun CreateMusicTextFieldRow(
             tint = LocalThemeColor.current.white.copy(alpha = 0.2f)
         )
         CreateMusicTextField(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .sharedBoundsForCreateViews(),
             textFieldState = textFieldState,
             interactionSource = interactionSource
         )
@@ -145,6 +147,7 @@ private fun CreateMusicTextField(
             ) {
                 if (textFieldState.text.isBlank()) {
                     Text(
+                        modifier = Modifier.sharedElementForCreateText(),
                         text = "Create song",
                         color = LocalThemeColor.current.white.copy(alpha = 0.2f)
                     )

@@ -10,10 +10,14 @@ fun AppContainer(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    TapToRemoveFocusLayout(
-        modifier = modifier
-            .fillMaxSize(),
+    CreateSharedTransitionScope(
+        modifier = modifier.fillMaxSize()
     ) {
-        content()
+        TapToRemoveFocusLayout(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
+            content()
+        }
     }
 }

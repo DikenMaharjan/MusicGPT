@@ -40,7 +40,10 @@ fun CreateMusicButton(
             painter = painterResource(R.drawable.stars),
             contentDescription = null
         )
-        Text("Create")
+        Text(
+            modifier = Modifier.sharedElementForCreateText(),
+            text = "Create"
+        )
     }
 }
 

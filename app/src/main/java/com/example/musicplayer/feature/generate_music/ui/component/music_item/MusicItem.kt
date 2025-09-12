@@ -123,11 +123,11 @@ fun MusicItemActionItems(
         onDismissRequest = onDismiss
     ) {
         DropdownMenuItem(
-            text = { Text("Delete") },
+            text = { Text(stringResource(R.string.common_delete)) },
             onClick = onDelete
         )
         DropdownMenuItem(
-            text = { Text("Regenerate") },
+            text = { Text(stringResource(R.string.common_regenerate)) },
             onClick = onRegenerate
         )
     }

@@ -17,7 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui.theme.PreviewTheme
 
@@ -40,13 +42,13 @@ fun NoMusicView(
         )
         Spacer(modifier = Modifier.height(LocalSpacing.current.dimen8))
         Text(
-            text = "Your Music Library is Empty",
+            text = stringResource(R.string.no_music_view_empty_library_title),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(LocalSpacing.current.dimen16),
             textAlign = TextAlign.Center
         )
         Text(
-            text = "It looks like you haven't added any music yet. Let's compose something new! Tap the 'Create' button to generate your first AI-powered masterpiece.",
+            text = stringResource(R.string.no_music_view_empty_library_message),
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(LocalSpacing.current.dimen16),
             textAlign = TextAlign.Center,

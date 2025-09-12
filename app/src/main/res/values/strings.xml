@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
 
+    <string name="common_delete">Delete</string>
+    <string name="common_regenerate">Regenerate</string>
+    <string name="common_create">Create</string>
+    <string name="common_retry">Retry</string>
+    <string name="common_play">Play</string>
+    <string name="common_pause">Pause</string>
+
     <string name="bottom_bar_generate_ai_icon_description">Generate AI Icon</string>
     <string name="bottom_bar_discover_icon_description">Discover Icon</string>
     <string name="bottom_bar_reel_icon_description">Reel Icon</string>
@@ -21,4 +28,16 @@
     <string name="music_generation_state_generating_rhythm">Laying down a groovy rhythm for your music.</string>
     <string name="music_generation_state_initializing">Initializing the music generation process.</string>
     <string name="music_generation_state_processing_prompt">Processing your prompt to understand the desired music style.</string>
+
+    <string name="no_music_view_empty_library_title">Your Music Library is Empty</string>
+    <string name="no_music_view_empty_library_message">It looks like you haven\'t added any music yet. Let\'s compose something new! Tap the \'Create\' button to generate your first AI-powered masterpiece.</string>
+
+    <string name="create_music_text_field_row_placeholder">Create song</string>
+
+    <string name="music_generation_item_version">v%d</string>
+
+    <string name="floating_player_play_previous_description">Play Previous</string>
+    <string name="floating_player_retry_description">Retry</string>
+    <string name="floating_player_play_next_description">Play Next</string>
+
 </resources>

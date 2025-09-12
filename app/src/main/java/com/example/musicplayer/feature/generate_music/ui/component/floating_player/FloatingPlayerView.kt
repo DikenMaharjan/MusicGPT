@@ -24,8 +24,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.example.musicplayer.R
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.feature.generate_music.ui.component.MusicAlbumView
 import com.example.musicplayer.ui.theme.LocalSpacing
@@ -110,7 +112,7 @@ private fun MusicControlsRow(
         ) {
             Icon(
                 imageVector = Icons.Default.SkipPrevious,
-                contentDescription = "Play Previous"
+                contentDescription = stringResource(R.string.floating_player_play_previous_description)
             )
         }
         if (isPlaying) {
@@ -119,7 +121,7 @@ private fun MusicControlsRow(
             ) {
                 Icon(
                     imageVector = Icons.Default.Pause,
-                    contentDescription = "Pause"
+                    contentDescription = stringResource(R.string.common_pause)
                 )
             }
         } else {
@@ -128,7 +130,7 @@ private fun MusicControlsRow(
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play"
+                    contentDescription = stringResource(R.string.common_play)
                 )
             }
         }
@@ -143,7 +145,7 @@ private fun MusicControlsRow(
     ) {
         Icon(
             imageVector = Icons.Default.SkipNext,
-            contentDescription = "Play Next"
+            contentDescription = stringResource(R.string.floating_player_play_next_description)
         )
     }
 }

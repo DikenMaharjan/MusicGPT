@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
@@ -42,7 +43,7 @@ fun CreateMusicButton(
         )
         Text(
             modifier = Modifier.sharedElementForCreateText(),
-            text = "Create"
+            text = stringResource(R.string.common_create)
         )
     }
 }

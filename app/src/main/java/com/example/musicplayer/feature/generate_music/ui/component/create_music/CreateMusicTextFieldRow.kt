@@ -167,7 +167,7 @@ private fun CreateMusicTextField(
                 if (textFieldState.text.isBlank()) {
                     Text(
                         modifier = Modifier.sharedElementForCreateText(),
-                        text = "Create song",
+                        text = stringResource(R.string.create_music_text_field_row_placeholder),
                         color = LocalThemeColor.current.white.copy(alpha = 0.2f)
                     )
                 }

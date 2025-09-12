@@ -86,7 +86,7 @@ fun MusicGenerationItem(
                     Icon(
                         imageVector = Icons.Default.Refresh,
                         tint = Color.Red,
-                        contentDescription = "Retry"
+                        contentDescription = stringResource(R.string.floating_player_retry_description)
                     )
                 }
             } else {
@@ -102,7 +102,7 @@ fun MusicGenerationItem(
                             horizontal = LocalSpacing.current.dimen18,
                             vertical = LocalSpacing.current.dimen8
                         ),
-                    text = "v${generationRecord.version}",
+                    text = stringResource(R.string.music_generation_item_version, generationRecord.version),
                     style = MaterialTheme.typography.labelLarge
                 )
             }

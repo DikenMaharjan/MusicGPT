@@ -24,7 +24,11 @@ sealed class MusicGenerationState {
 
     data object Finalizing : MusicGenerationState()
     data class Completed(
-        val music: Music,
+        val title: String,
+        val prompt: String,
+        val image: ImageUrl,
+        val song: SongUrl,
+        val createdAt: Instant,
         val timeTaken: kotlin.time.Duration
     ) : MusicGenerationState()
 

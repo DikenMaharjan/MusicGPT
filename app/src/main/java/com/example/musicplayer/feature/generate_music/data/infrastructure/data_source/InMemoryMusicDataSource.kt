@@ -1,6 +1,6 @@
 package com.example.musicplayer.feature.generate_music.data.infrastructure.data_source
 
-import com.example.musicplayer.feature.generate_music.data.infrastructure.generator.MusicGenerationSession.Companion.getRandomAlbumImage
+import com.example.musicplayer.feature.generate_music.data.infrastructure.generator.MusicGenerator.Companion.getRandomAlbumImage
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

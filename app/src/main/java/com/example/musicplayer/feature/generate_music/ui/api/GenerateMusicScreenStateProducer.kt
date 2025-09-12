@@ -2,7 +2,6 @@ package com.example.musicplayer.feature.generate_music.ui.api
 
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
-import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationState
 import com.example.musicplayer.feature.generate_music.data.repo.MusicRepository
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicListItem
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
@@ -30,8 +29,9 @@ class GenerateMusicScreenStateProducer @Inject constructor(
             .map { music -> music.toListItem(isPlaying = currentlyPlaying?.id == music.id) }
 
         val sortedGeneratingItems = musicGenerationRecords
+            .values
             .sortedByDescending { it.createdAt }
-            .getGeneratingItems(musics)
+            .getGeneratingItems()
 
         GenerateMusicScreenState(
             items = sortedGeneratingItems + sortedMusicItems,
@@ -39,11 +39,7 @@ class GenerateMusicScreenStateProducer @Inject constructor(
         )
     }
 
-    private fun List<MusicGenerationRecord>.getGeneratingItems(
-        musics: List<Music>
-    ): List<GenerateMusicListItem.GeneratingItem> = filter { record ->
-        record.state !is MusicGenerationState.Completed || record.state.music !in musics
-    }.map { generatingMusic ->
+    private fun List<MusicGenerationRecord>.getGeneratingItems() = map { generatingMusic ->
         generatingMusic.toListItem()
     }
 

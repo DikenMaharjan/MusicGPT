@@ -40,6 +40,14 @@ class GenerateMusicScreenViewModel @Inject constructor(
         musicController.play(audioContent = AudioContent(id = music.id, sweepFactor = music.song))
     }
 
+    fun delete(music: Music) {
+        musicRepository.delete(music)
+        val isDeletingMusicBeingPlayed = musicController.playingId() == music.id
+        if (isDeletingMusicBeingPlayed) {
+            musicController.dismiss()
+        }
+    }
+
     fun play() {
         musicController.play()
     }

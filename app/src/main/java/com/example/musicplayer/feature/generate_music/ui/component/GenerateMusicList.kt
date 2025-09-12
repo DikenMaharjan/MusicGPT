@@ -28,7 +28,8 @@ fun GenerateMusicList(
     modifier: Modifier = Modifier,
     state: GenerateMusicScreenState,
     playMusic: (Music) -> Unit,
-    retryGeneration: (MusicGenerationRecord) -> Unit
+    retryGeneration: (MusicGenerationRecord) -> Unit,
+    delete: (Music) -> Unit
 ) {
     val remainingInsets = remember { MutableWindowInsets() }
     val bottomInset = CustomBottomInsets.BottomInsets
@@ -60,7 +61,8 @@ fun GenerateMusicList(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { playMusic(item.music) },
-                        musicItem = item
+                        musicItem = item,
+                        delete = delete
                     )
                 }
             }

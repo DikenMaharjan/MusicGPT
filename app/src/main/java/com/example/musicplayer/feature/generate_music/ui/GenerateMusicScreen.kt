@@ -4,7 +4,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -50,6 +49,7 @@ fun GenerateMusicScreen(
             generateMusic = viewModel::generateMusic,
             playMusic = viewModel::play,
             retryGeneration = viewModel::retryGeneration,
+            delete = viewModel::delete,
             musicControlActions = MusicControlActions(
                 pause = viewModel::pause,
                 play = viewModel::play,
@@ -67,6 +67,7 @@ private fun GenerateMusicContent(
     state: GenerateMusicScreenState,
     generateMusic: (String) -> Unit,
     playMusic: (Music) -> Unit,
+    delete: (Music) -> Unit,
     retryGeneration: (MusicGenerationRecord) -> Unit,
     musicControlActions: MusicControlActions
 ) {
@@ -81,7 +82,8 @@ private fun GenerateMusicContent(
             GenerateMusicList(
                 state = state,
                 playMusic = playMusic,
-                retryGeneration = retryGeneration
+                retryGeneration = retryGeneration,
+                delete = delete
             )
         }
         val floatingPlayerInsets = rememberCustomBottomInsets()

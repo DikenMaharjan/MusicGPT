@@ -11,11 +11,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,9 +40,13 @@ import java.time.Instant
 @Composable
 fun MusicItem(
     modifier: Modifier = Modifier,
-    musicItem: GenerateMusicListItem.MusicItem
+    musicItem: GenerateMusicListItem.MusicItem,
+    delete: (Music) -> Unit,
 ) {
     val music = musicItem.music
+    var isActionItemsShown by remember {
+        mutableStateOf(false)
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -79,13 +89,40 @@ fun MusicItem(
             )
         }
         IconButton(
-            onClick = {}
+            onClick = {
+                isActionItemsShown = true
+            }
         ) {
             Icon(
                 imageVector = Icons.Default.MoreVert,
                 contentDescription = stringResource(R.string.music_item_more_icon_description)
             )
+            MusicItemActionItems(
+                isExpanded = isActionItemsShown,
+                onDismiss = { isActionItemsShown = false },
+                onDelete = { delete(music) }
+            )
         }
+    }
+}
+
+
+@Composable
+fun MusicItemActionItems(
+    modifier: Modifier = Modifier,
+    isExpanded: Boolean,
+    onDismiss: () -> Unit,
+    onDelete: () -> Unit,
+) {
+    DropdownMenu(
+        modifier = modifier,
+        expanded = isExpanded,
+        onDismissRequest = onDismiss
+    ) {
+        DropdownMenuItem(
+            text = { Text("Delete") },
+            onClick = onDelete
+        )
     }
 }
 
@@ -105,7 +142,8 @@ private fun MusicItemPreview() {
             musicItem = GenerateMusicListItem.MusicItem(
                 music = music,
                 isPlaying = true
-            )
+            ),
+            delete = {}
         )
     }
 }

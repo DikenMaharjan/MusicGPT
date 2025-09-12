@@ -20,6 +20,10 @@ class InMemoryMusicDataSource @Inject constructor() {
         _musics.update { it + music }
     }
 
+    fun delete(music: Music) {
+        _musics.update { it - music }
+    }
+
     companion object {
         private val initialDummyMusics = listOf(
             Music(

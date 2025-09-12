@@ -47,4 +47,7 @@ class MusicController @Inject constructor(
         selectedContent.update { null }
     }
 
+    fun playingId(): String? {
+        return selectedContent.value?.id
+    }
 }

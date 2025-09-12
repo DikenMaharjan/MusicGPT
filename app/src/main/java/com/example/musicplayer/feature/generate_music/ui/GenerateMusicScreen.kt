@@ -19,6 +19,7 @@ import com.example.musicplayer.feature.generate_music.ui.component.create_music.
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.InsetsProvidingFloatingPlayerView
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.MusicControlActions
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.ProvideCustomBottomInsets
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.customBottomInsets
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.rememberCustomBottomInsets
 import com.example.musicplayer.feature.generate_music.ui.component.music_list.GenerateMusicList
 import com.example.musicplayer.feature.generate_music.ui.component.music_list.NoMusicView
@@ -81,7 +82,9 @@ private fun GenerateMusicContent(
             ) {
                 if (state.items.isEmpty()) {
                     NoMusicView(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = modifier
+                            .fillMaxSize()
+                            .customBottomInsets(createMusicViewInsets),
                     )
                 } else {
                     GenerateMusicList(

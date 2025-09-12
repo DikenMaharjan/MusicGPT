@@ -50,6 +50,7 @@ fun GenerateMusicScreen(
             playMusic = viewModel::play,
             retryGeneration = viewModel::retryGeneration,
             delete = viewModel::delete,
+            regenerate = viewModel::regenerate,
             musicControlActions = MusicControlActions(
                 pause = viewModel::pause,
                 play = viewModel::play,
@@ -68,6 +69,7 @@ private fun GenerateMusicContent(
     generateMusic: (String) -> Unit,
     playMusic: (Music) -> Unit,
     delete: (Music) -> Unit,
+    regenerate: (Music) -> Unit,
     retryGeneration: (MusicGenerationRecord) -> Unit,
     musicControlActions: MusicControlActions
 ) {
@@ -83,7 +85,8 @@ private fun GenerateMusicContent(
                 state = state,
                 playMusic = playMusic,
                 retryGeneration = retryGeneration,
-                delete = delete
+                delete = delete,
+                regenerate = regenerate
             )
         }
         val floatingPlayerInsets = rememberCustomBottomInsets()

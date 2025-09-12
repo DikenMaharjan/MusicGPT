@@ -42,6 +42,7 @@ fun MusicItem(
     modifier: Modifier = Modifier,
     musicItem: GenerateMusicListItem.MusicItem,
     delete: (Music) -> Unit,
+    regenerate: (Music) -> Unit
 ) {
     val music = musicItem.music
     var isActionItemsShown by remember {
@@ -100,7 +101,8 @@ fun MusicItem(
             MusicItemActionItems(
                 isExpanded = isActionItemsShown,
                 onDismiss = { isActionItemsShown = false },
-                onDelete = { delete(music) }
+                onDelete = { delete(music) },
+                onRegenerate = { regenerate(music) }
             )
         }
     }
@@ -113,6 +115,7 @@ fun MusicItemActionItems(
     isExpanded: Boolean,
     onDismiss: () -> Unit,
     onDelete: () -> Unit,
+    onRegenerate: () -> Unit
 ) {
     DropdownMenu(
         modifier = modifier,
@@ -122,6 +125,10 @@ fun MusicItemActionItems(
         DropdownMenuItem(
             text = { Text("Delete") },
             onClick = onDelete
+        )
+        DropdownMenuItem(
+            text = { Text("Regenerate") },
+            onClick = onRegenerate
         )
     }
 }
@@ -144,7 +151,8 @@ private fun MusicItemPreview() {
                 music = music,
                 isPlaying = true
             ),
-            delete = {}
+            delete = {},
+            regenerate = {}
         )
     }
 }

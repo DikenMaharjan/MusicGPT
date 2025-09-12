@@ -42,7 +42,7 @@ class InMemoryMusicDataSource @Inject constructor() {
                 song = 0.42,
                 createdAt = Instant.now().minusSeconds(1800),
                 image = getRandomAlbumImage(),
-                version = 2
+                version = 1
             ),
             Music(
                 id = "3",
@@ -51,7 +51,7 @@ class InMemoryMusicDataSource @Inject constructor() {
                 song = 0.91,
                 createdAt = Instant.now(),
                 image = getRandomAlbumImage(),
-                version = 4
+                version = 1
             )
         )
     }

@@ -1,6 +1,7 @@
 package com.example.musicplayer.feature.generate_music.ui.component.music_item
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,7 +44,7 @@ fun MusicGenerationItem(
 ) {
     val animatedProgress by animateFloatAsState(
         targetValue = generationRecord.progress,
-        animationSpec = tween(4000)
+        animationSpec = if (generationRecord.progress == 0f) snap() else tween(4000)
     )
 
     BackgroundProgressLayout(

@@ -1,6 +1,7 @@
 package com.example.musicplayer.feature.generate_music.ui.component.music_item
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
@@ -40,21 +42,26 @@ fun MusicGenerationItem(
     generationRecord: MusicGenerationRecord,
     retryGeneration: (MusicGenerationRecord) -> Unit
 ) {
+    val animatedProgress by animateFloatAsState(
+        targetValue = generationRecord.progress,
+        animationSpec = tween(4000)
+    )
+
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
     ) {
         BackgroundProgressBar(
-            progress = generationRecord.progress
+            progress = animatedProgress
         )
         Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(LocalSpacing.current.dimen4),
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
         ) {
             GenerationProgressView(
-                progress = generationRecord.progress
+                modifier = Modifier.padding(LocalSpacing.current.dimen8),
+                progress = animatedProgress
             )
             Column(
                 modifier = Modifier.weight(1f),
@@ -94,6 +101,7 @@ fun MusicGenerationItem(
                     style = MaterialTheme.typography.labelLarge
                 )
             }
+            Spacer(modifier = Modifier.width(LocalSpacing.current.dimen4))
         }
     }
 }
@@ -118,7 +126,6 @@ private fun BoxScope.BackgroundProgressBar(
     modifier: Modifier = Modifier,
     progress: Float
 ) {
-    val animatedProgress by animateFloatAsState(progress)
     Spacer(
         modifier = modifier
             .matchParentSize()
@@ -126,8 +133,8 @@ private fun BoxScope.BackgroundProgressBar(
             .background(
                 brush = Brush.horizontalGradient(
                     0f to LocalThemeColor.current.primary.p100,
-                    (animatedProgress - 0.1f).coerceAtLeast(0f) to LocalThemeColor.current.primary.p100,
-                    (animatedProgress + 0.1f).coerceAtMost(1f) to Color.Transparent,
+                    (progress - 0.1f).coerceAtLeast(0f) to LocalThemeColor.current.primary.p100,
+                    (progress + 0.1f).coerceAtMost(1f) to Color.Transparent,
                     1f to Color.Transparent
                 )
             )

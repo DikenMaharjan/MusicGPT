@@ -168,7 +168,8 @@ fun FloatingPlayerViewPreview(
                 prompt = "A prompt for the music",
                 image = "image_url",
                 song = 0.5,
-                createdAt = Instant.now()
+                createdAt = Instant.now(),
+                version = 2
             )
         }
         val musicControlActions = remember { MusicControlActions({}, {}, {}, {}) }

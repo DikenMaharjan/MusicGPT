@@ -32,7 +32,8 @@ class InMemoryMusicDataSource @Inject constructor() {
                 prompt = "A calm beat for study or sleep, with a space feel.",
                 song = 0.75,
                 createdAt = Instant.now().minusSeconds(3600),
-                image = getRandomAlbumImage()
+                image = getRandomAlbumImage(),
+                version = 1
             ),
             Music(
                 id = "2",
@@ -40,7 +41,8 @@ class InMemoryMusicDataSource @Inject constructor() {
                 prompt = "Fast electronic music for a robot boss fight in a game.",
                 song = 0.42,
                 createdAt = Instant.now().minusSeconds(1800),
-                image = getRandomAlbumImage()
+                image = getRandomAlbumImage(),
+                version = 2
             ),
             Music(
                 id = "3",
@@ -48,7 +50,8 @@ class InMemoryMusicDataSource @Inject constructor() {
                 prompt = "A soft and calm piano song, like a quiet field in the morning.",
                 song = 0.91,
                 createdAt = Instant.now(),
-                image = getRandomAlbumImage()
+                image = getRandomAlbumImage(),
+                version = 4
             )
         )
     }

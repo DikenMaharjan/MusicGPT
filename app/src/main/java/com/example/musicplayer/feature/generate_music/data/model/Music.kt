@@ -9,6 +9,7 @@ data class Music(
     val image: ImageUrl,
     val song: SongUrl,
     val createdAt: Instant,
+    val version: Int
 )
 
 

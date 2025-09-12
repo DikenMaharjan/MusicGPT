@@ -28,35 +28,35 @@ class MusicRepository @Inject constructor(
     val musicGenerationRecords = inMemoryMusicGenerationRecords.musicGenerationRecords
 
     fun generateMusic(prompt: String) {
-        appScope.launch {
-            val id = UUID.randomUUID().toString()
-            val generationRecord = MusicGenerationRecord(
-                id = id,
-                prompt = prompt
-            )
-            generateMusic(generationRecord)
-        }
-
+        val id = UUID.randomUUID().toString()
+        val generationRecord = MusicGenerationRecord(
+            id = id,
+            prompt = prompt
+        )
+        generateMusic(generationRecord)
     }
 
-    private suspend fun generateMusic(
+    private fun generateMusic(
         generationRecord: MusicGenerationRecord
     ) {
-        inMemoryMusicGenerationRecords.upsert(generationRecord)
-        musicGenerator
-            .generate(prompt = generationRecord.prompt)
-            .catch { error ->
-                handleMusicGenerationError(
-                    generationRecord = generationRecord,
-                    error = error
-                )
-            }
-            .collect { update ->
-                handleStateUpdates(
-                    generationRecord = generationRecord,
-                    update = update
-                )
-            }
+        appScope.launch {
+            inMemoryMusicGenerationRecords.upsert(generationRecord)
+            musicGenerator
+                .generate(prompt = generationRecord.prompt)
+                .catch { error ->
+                    handleMusicGenerationError(
+                        generationRecord = generationRecord,
+                        error = error
+                    )
+                }
+                .collect { update ->
+                    handleStateUpdates(
+                        generationRecord = generationRecord,
+                        update = update
+                    )
+                }
+        }
+
     }
 
     private fun handleMusicGenerationError(
@@ -99,22 +99,32 @@ class MusicRepository @Inject constructor(
             song = completedState.song,
             image = completedState.image,
             createdAt = completedState.createdAt,
-            id = id
+            id = id,
+            version = version
         )
     }
 
     fun retryGeneration(musicGenerationRecord: MusicGenerationRecord) {
-        appScope.launch {
-            generateMusic(
-                generationRecord = musicGenerationRecord.copy(
-                    version = musicGenerationRecord.version + 1,
-                    state = MusicGenerationState.Initializing
-                )
+        generateMusic(
+            generationRecord = musicGenerationRecord.copy(
+                version = musicGenerationRecord.version + 1,
+                state = MusicGenerationState.Initializing
             )
-        }
+        )
     }
 
     fun delete(music: Music) {
         inMemoryMusicDataSource.delete(music)
+    }
+
+    fun regenerate(music: Music) {
+        delete(music)
+        val generationRecord = MusicGenerationRecord(
+            id = music.id,
+            prompt = music.prompt,
+            version = music.version + 1,
+            createdAt = music.createdAt
+        )
+        generateMusic(generationRecord)
     }
 }

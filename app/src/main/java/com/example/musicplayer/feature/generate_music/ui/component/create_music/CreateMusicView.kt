@@ -1,21 +1,17 @@
 package com.example.musicplayer.feature.generate_music.ui.component.create_music
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.LocalCustomBottomInsets
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.customBottomInsets
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui_core.components.layout.ProvideAnimatedVisibilityScope
 import com.example.musicplayer.ui_core.components.layout.sharedBoundsWithLocalScopes
@@ -27,45 +23,50 @@ fun CreateMusicView(
     modifier: Modifier = Modifier,
     generateMusic: (String) -> Unit
 ) {
-    var showTextField by rememberSaveable { mutableStateOf(false) }
-    val focusRequester = remember {
-        FocusRequester()
-    }
-
+    val createMusicTextFieldState = rememberCreateMusicTextFileState()
     AnimatedContent(
-        modifier = modifier,
-        targetState = showTextField
+        modifier = modifier
+            .customBottomInsets(LocalCustomBottomInsets.current),
+        targetState = createMusicTextFieldState.isShown
     ) { isTextFieldVisible ->
         ProvideAnimatedVisibilityScope(
             scope = this
         ) {
             if (isTextFieldVisible) {
-                val focusManager = LocalFocusManager.current
-                BackHandler {
-                    focusManager.clearFocus(true)
-                }
-                LaunchedEffect(Unit) {
-                    focusRequester.requestFocus()
-                }
                 CreateMusicTextFieldRow(
                     modifier = Modifier
-                        .imePadding()
-                        .focusRequester(focusRequester),
-                    onFocusRemoved = {
-                        showTextField = false
-                    },
+                        .imePadding(),
+                    onFocusRemoved = createMusicTextFieldState::hide,
                     onGenerate = generateMusic
                 )
             } else {
                 CreateMusicButton(
                     modifier = Modifier
                         .padding(LocalSpacing.current.dimen12),
-                    onClick = {
-                        showTextField = true
-                    }
+                    onClick = createMusicTextFieldState::show
                 )
             }
         }
+    }
+}
+
+private class CreateMusicTextFieldState {
+
+    var isShown by mutableStateOf(false)
+
+    fun show() {
+        isShown = true
+    }
+
+    fun hide() {
+        isShown = false
+    }
+}
+
+@Composable
+private fun rememberCreateMusicTextFileState(): CreateMusicTextFieldState {
+    return remember {
+        CreateMusicTextFieldState()
     }
 }
 

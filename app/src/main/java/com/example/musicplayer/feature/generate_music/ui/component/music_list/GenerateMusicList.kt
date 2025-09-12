@@ -1,4 +1,4 @@
-package com.example.musicplayer.feature.generate_music.ui.component
+package com.example.musicplayer.feature.generate_music.ui.component.music_list
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable

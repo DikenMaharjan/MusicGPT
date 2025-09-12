@@ -1,5 +1,6 @@
 package com.example.musicplayer.feature.generate_music.ui.component.create_music
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -33,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -60,7 +63,18 @@ fun CreateMusicTextFieldRow(
     onFocusRemoved: () -> Unit,
     onGenerate: (String) -> Unit
 ) {
+    val focusRequester = remember {
+        FocusRequester()
+    }
     val onRemoved by rememberUpdatedState(onFocusRemoved)
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
+    BackHandler {
+        onRemoved()
+    }
     val interactionSource = remember {
         MutableInteractionSource()
     }
@@ -75,9 +89,9 @@ fun CreateMusicTextFieldRow(
                 }
             }
     }
-
     Row(
         modifier = modifier
+            .focusRequester(focusRequester)
             .fillMaxWidth()
             .clearFocusOnTap()
             .imePadding()

@@ -71,7 +71,7 @@ private fun BottomNavigationIcon(
         Icon(
             painter = icon,
             contentDescription = contentDescription,
-            tint = if (isSelected) LocalThemeColor.current.white else LocalThemeColor.current.primary.p200
+            tint = if (isSelected) LocalThemeColor.current.white else LocalThemeColor.current.primary.p800
         )
     }
 }

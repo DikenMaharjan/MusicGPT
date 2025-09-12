@@ -1,5 +1,6 @@
 package com.example.musicplayer.feature.generate_music.ui.component.create_music
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import com.example.musicplayer.ui.theme.LocalSpacing
 
 @Composable
@@ -29,6 +31,10 @@ fun CreateMusicView(
         targetState = showTextField
     ) { isTextFieldVisible ->
         if (isTextFieldVisible) {
+            val focusManager = LocalFocusManager.current
+            BackHandler {
+                focusManager.clearFocus(true)
+            }
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
             }

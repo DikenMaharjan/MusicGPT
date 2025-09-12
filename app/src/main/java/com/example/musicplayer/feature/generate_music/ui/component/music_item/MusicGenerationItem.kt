@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.musicplayer.R
@@ -64,11 +65,18 @@ fun MusicGenerationItem(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen4)
             ) {
-                Text(text = generationRecord.prompt, style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = generationRecord.prompt,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Text(
                     text = generationRecord.state.msg,
                     style = MaterialTheme.typography.bodySmall,
-                    color = LocalThemeColor.current.primary.p1100
+                    color = LocalThemeColor.current.primary.p1100,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
             if (generationRecord.state is MusicGenerationState.Failed) {

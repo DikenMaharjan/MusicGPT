@@ -1,5 +1,6 @@
 package com.example.musicplayer.feature.generate_music.ui.component
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.MutableWindowInsets
@@ -39,12 +40,16 @@ fun GenerateMusicList(
             },
         contentPadding = remainingInsets.asPaddingValues()
     ) {
-        items(state.items) { item ->
+        items(
+            items = state.items,
+            key = { item -> item.id }
+        ) { item ->
             when (item) {
                 is GenerateMusicListItem.GeneratingItem -> {
                     MusicGenerationItem(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .animateItem(fadeInSpec = tween(600)),
                         generationRecord = item.musicGenerationRecord,
                         retryGeneration = retryGeneration
                     )

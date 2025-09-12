@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -41,6 +42,7 @@ import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.addOutline
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
@@ -112,9 +114,12 @@ fun CreateMusicTextFieldRow(
             textFieldState = textFieldState,
             interactionSource = interactionSource
         )
+        val focusManager = LocalFocusManager.current
         IconButton(
             onClick = {
+                focusManager.clearFocus(force = true)
                 onGenerate(textFieldState.text.toString())
+                textFieldState.clearText()
             },
             enabled = textFieldState.text.isNotBlank()
         ) {

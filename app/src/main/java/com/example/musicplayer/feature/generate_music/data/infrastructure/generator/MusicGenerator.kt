@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.random.Random
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.measureTime
 
 class MusicGenerator @Inject constructor() {
@@ -21,6 +22,7 @@ class MusicGenerator @Inject constructor() {
                 addInstruments()
                 finalizeMusic()
             }
+            delay(5.seconds)
             completeGeneration(
                 timeTaken = timeTaken, prompt = prompt
             )

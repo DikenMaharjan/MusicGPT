@@ -19,8 +19,8 @@ inline fun Modifier.optional(
 
 @Composable
 fun Modifier.rippleLessClickable(
+    interactionSource: MutableInteractionSource? = null,
     onClick: () -> Unit,
-    interactionSource: MutableInteractionSource? = null
 ): Modifier = this.clickable(
     onClick = onClick,
     interactionSource = interactionSource

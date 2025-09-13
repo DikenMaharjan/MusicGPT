@@ -9,6 +9,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -48,9 +49,13 @@ fun CreateSharedTransitionScope(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun Modifier.withLocalSharedTransitionScope(block: @Composable SharedTransitionScope.(Modifier) -> Modifier): Modifier {
-    val modifier = this
-    return with(LocalSharedTransitionScope.current) {
-        block(modifier)
+    return if (!LocalView.current.isInEditMode) {
+        val modifier = this
+        with(LocalSharedTransitionScope.current) {
+            block(modifier)
+        }
+    } else {
+        this
     }
 }
 

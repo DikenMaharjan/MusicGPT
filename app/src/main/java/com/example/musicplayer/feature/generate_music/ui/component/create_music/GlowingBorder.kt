@@ -17,81 +17,83 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.lerp
-import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 
 fun Modifier.glowingBorder(
     colorCount: Int = 4
-): Modifier = this.composed {
-    val infiniteTransition = rememberInfiniteTransition()
+): Modifier = this
+    .composed {
+        val infiniteTransition = rememberInfiniteTransition()
 
-    val phase by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            tween(durationMillis = colorCount * 2000),
-            repeatMode = RepeatMode.Restart
+        val phase by infiniteTransition.animateFloat(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(
+                tween(durationMillis = colorCount * 4000),
+                repeatMode = RepeatMode.Restart
+            )
         )
-    )
-    val alpha by infiniteTransition.animateFloat(
-        0.65f, 0.8f,
-        infiniteRepeatable(
-            tween(4000, easing = LinearEasing),
-            RepeatMode.Reverse
+        val alpha by infiniteTransition.animateFloat(
+            0.65f, 0.8f,
+            infiniteRepeatable(
+                tween(2000, easing = LinearEasing),
+                RepeatMode.Reverse
+            )
         )
-    )
-    val borderAlpha by infiniteTransition.animateFloat(
-        0.65f, 0.9f,
-        infiniteRepeatable(
-            tween(3000),
-            RepeatMode.Reverse
+        val borderAlpha by infiniteTransition.animateFloat(
+            0.65f, 0.9f,
+            infiniteRepeatable(
+                tween(3000),
+                RepeatMode.Reverse
+            )
         )
-    )
-    val radius by infiniteTransition.animateFloat(
-        65f, 100f,
-        animationSpec = infiniteRepeatable(
-            tween(5000),
-            RepeatMode.Reverse
+        val radius by infiniteTransition.animateFloat(
+            65f, 100f,
+            animationSpec = infiniteRepeatable(
+                tween(5000),
+                RepeatMode.Reverse
+            )
         )
-    )
 
-    val globalIndexFloat = phase * colors.size
-    val baseIndex = globalIndexFloat.toInt()
-    val localFraction = globalIndexFloat - baseIndex
+        val globalIndexFloat = phase * colors.size
+        val baseIndex = globalIndexFloat.toInt()
+        val localFraction = globalIndexFloat - baseIndex
 
-    val windowColorsList = remember(colorCount) {
-        MutableList(colorCount) { Color.Transparent }
+        val windowColorsList = remember(colorCount) {
+            MutableList(colorCount) { Color.Transparent }
+        }
+
+        repeat(colorCount) { offset ->
+            val firstIndex = (baseIndex + offset) % colors.size
+            val secondIndex = (firstIndex + 1) % colors.size
+            windowColorsList[offset] = lerp(colors[firstIndex], colors[secondIndex], localFraction)
+        }
+
+
+        val density = LocalDensity.current
+
+        dropShadow(
+            shape = CircleShape,
+            block = {
+                this.color = Color.White
+                this.radius = with(density) {
+                    8.dp.toPx()
+                }
+                this.alpha = borderAlpha
+            }
+        ).dropShadow(
+            shape = RectangleShape,
+            block = {
+                this.radius = radius
+                this.brush = Brush.linearGradient(
+                    colors = windowColorsList,
+                    tileMode = TileMode.Mirror
+                )
+                this.alpha = alpha
+            }
+        )
     }
-
-    repeat(colorCount) { offset ->
-        val firstIndex = (baseIndex + offset) % colors.size
-        val secondIndex = (firstIndex + 1) % colors.size
-        windowColorsList[offset] = lerp(colors[firstIndex], colors[secondIndex], localFraction)
-    }
-
-
-    dropShadow(
-        shape = CircleShape,
-        shadow = Shadow(
-            color = Color.White,
-            radius = 8.dp,
-            alpha = borderAlpha
-        )
-    ).dropShadow(
-        shape = RectangleShape,
-        shadow = Shadow(
-            radius = with(LocalDensity.current) {
-                radius.toDp()
-            },
-            brush = Brush.linearGradient(
-                colors = windowColorsList,
-                tileMode = TileMode.Mirror
-            ),
-            alpha = alpha
-        )
-    )
-}
 
 
 private val colors: List<Color> = listOf(

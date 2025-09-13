@@ -2,6 +2,7 @@ package com.example.musicplayer.feature.generate_music.ui.component.create_music
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -56,38 +57,27 @@ fun CreateMusicTextFieldRow(
     onFocusRemoved: () -> Unit,
     onGenerate: (String) -> Unit
 ) {
-    val focusRequester = remember {
-        FocusRequester()
-    }
-    val onRemoved by rememberUpdatedState(onFocusRemoved)
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
-
-    BackHandler {
-        onRemoved()
-    }
+    val hideTextField by rememberUpdatedState(onFocusRemoved)
     val interactionSource = remember {
         MutableInteractionSource()
     }
-    val isFocused by interactionSource.collectIsFocusedAsState()
-    LaunchedEffect(Unit) {
-        snapshotFlow { isFocused }
-            // Drop the state when the text field is not focused during composition
-            .dropWhile { isFocused -> !isFocused }
-            .collect { isFocused ->
-                if (!isFocused) {
-                    onRemoved()
-                }
-            }
+    val focusRequester = remember {
+        FocusRequester()
     }
-    val focusManager = LocalFocusManager.current
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+    BackHandler(
+        onBack = hideTextField
+    )
+    interactionSource.OnFocusRemoved(
+        onFocusRemoved = hideTextField
+    )
     val textFieldState = rememberTextFieldState()
-
+    val focusManager = LocalFocusManager.current
     val onDone = {
         if (textFieldState.text.isNotBlank()) {
-            focusManager.clearFocus(force = true)
+            focusManager.clearFocus()
             onGenerate(textFieldState.text.toString())
             textFieldState.clearText()
         }
@@ -174,6 +164,22 @@ private fun CreateMusicTextField(
     )
 }
 
+@Composable
+private fun InteractionSource.OnFocusRemoved(
+    onFocusRemoved: () -> Unit
+) {
+    val isFocused by this.collectIsFocusedAsState()
+    LaunchedEffect(Unit) {
+        snapshotFlow { isFocused }
+            // Drop the state when the text field is not focused during composition
+            .dropWhile { isFocused -> !isFocused }
+            .collect { isFocused ->
+                if (!isFocused) {
+                    onFocusRemoved()
+                }
+            }
+    }
+}
 
 @Preview
 @Composable

@@ -30,7 +30,7 @@ fun GenerateMusicList(
     playMusic: (Music) -> Unit,
     retryGeneration: (MusicGenerationRecord) -> Unit,
     delete: (Music) -> Unit,
-    regenerate: (Music)->Unit
+    regenerate: (Music) -> Unit
 ) {
     val remainingInsets = remember { MutableWindowInsets() }
     val bottomInset = CustomBottomInsets.BottomInsets
@@ -51,7 +51,10 @@ fun GenerateMusicList(
                     MusicGenerationItem(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .animateItem(fadeInSpec = tween(600)),
+                            .animateItem(
+                                fadeInSpec = tween(600),
+                                fadeOutSpec = tween(600)
+                            ),
                         generationRecord = item.musicGenerationRecord,
                         retryGeneration = retryGeneration
                     )

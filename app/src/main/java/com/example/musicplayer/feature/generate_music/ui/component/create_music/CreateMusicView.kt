@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui_core.components.layout.ProvideAnimatedVisibilityScope
 import com.example.musicplayer.ui_core.components.layout.sharedBoundsWithLocalScopes
+import com.example.musicplayer.ui_core.components.layout.sharedElementWithLocalScopes
 import com.example.musicplayer.ui_core.haze.LocalHazeSource
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
@@ -89,5 +90,14 @@ private fun rememberCreateMusicTextFileState(): CreateMusicTextFieldState {
 fun Modifier.sharedBoundsForCreateViews(): Modifier {
     return this.sharedBoundsWithLocalScopes(
         "musicGPT-create-bounds"
+    )
+}
+
+
+@Composable
+@OptIn(ExperimentalSharedTransitionApi::class)
+fun Modifier.sharedElementForCreateText(): Modifier {
+    return this.sharedElementWithLocalScopes(
+        "musicGPT-create-text"
     )
 }

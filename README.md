@@ -6,15 +6,9 @@ MusicPlayer is a modern Android application built with **Jetpack Compose** that 
 
 ## 📱 Screenshots
 
-| Main Screen | Music Creation | Music List                                      |
-|-------------|----------------|-------------------------------------------------|
-| ![Main Screen](screenshots/main_screen.png) | ![Create Music](screenshots/create_music.png) | ![Music List](screenshots/music_generation.png) |
-
-| Floating Player |
-|-----------------|
-| ![Floating Player](screenshots/floating_player.png) |
-
-*Screenshots showcase the 4-phase animated progress borders, glowing text input, 12 diverse dummy music items, and overall dark theme design*
+| Main Screen                                 | Music Creation                                | Music List                                      | Floating Player                                     |
+|---------------------------------------------|-----------------------------------------------|-------------------------------------------------|-----------------------------------------------------|
+| ![Main Screen](screenshots/main_screen.png) | ![Create Music](screenshots/create_music.png) | ![Music List](screenshots/music_generation.png) | ![Floating Player](screenshots/floating_player.png) |
 
 ## 🏗️ Architecture Pattern
 

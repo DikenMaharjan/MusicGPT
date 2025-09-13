@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +18,7 @@ import com.example.musicplayer.feature.generate_music.data.model.MusicGeneration
 import com.example.musicplayer.feature.generate_music.ui.component.GenerateMusicTopBar
 import com.example.musicplayer.feature.generate_music.ui.component.create_music.CreateMusicView
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.InsetsProvidingFloatingPlayerView
+import com.example.musicplayer.feature.generate_music.ui.component.floating_player.LocalCustomBottomInsets
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.MusicControlActions
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.ProvideCustomBottomInsets
 import com.example.musicplayer.feature.generate_music.ui.component.floating_player.customBottomInsets
@@ -24,6 +26,9 @@ import com.example.musicplayer.feature.generate_music.ui.component.floating_play
 import com.example.musicplayer.feature.generate_music.ui.component.music_list.GenerateMusicList
 import com.example.musicplayer.feature.generate_music.ui.component.music_list.NoMusicView
 import com.example.musicplayer.feature.generate_music.ui.model.GenerateMusicScreenState
+import com.example.musicplayer.ui_core.haze.LocalHazeSource
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 
 @Composable
 fun GenerateMusicScreen(
@@ -72,9 +77,12 @@ private fun GenerateMusicContent(
         modifier = modifier
             .fillMaxSize()
     ) {
+        val hazeState = rememberHazeState()
         val floatingPlayerInsets = rememberCustomBottomInsets()
-        ProvideCustomBottomInsets(
-            customBottomInsets = floatingPlayerInsets
+
+        CompositionLocalProvider(
+            LocalHazeSource provides hazeState,
+            LocalCustomBottomInsets provides floatingPlayerInsets
         ) {
             val createMusicViewInsets = rememberCustomBottomInsets()
             ProvideCustomBottomInsets(
@@ -88,6 +96,7 @@ private fun GenerateMusicContent(
                     )
                 } else {
                     GenerateMusicList(
+                        modifier = Modifier.hazeSource(hazeState),
                         state = state,
                         playMusic = playMusic,
                         retryGeneration = retryGeneration,

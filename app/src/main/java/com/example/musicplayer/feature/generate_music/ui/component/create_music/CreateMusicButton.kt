@@ -12,12 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
-import com.example.musicplayer.ui.theme.LocalThemeColor
 import com.example.musicplayer.ui.theme.PreviewTheme
 
 @Composable
@@ -28,7 +28,7 @@ fun CreateMusicButton(
     Row(
         modifier = modifier
             .clip(CircleShape)
-            .background(LocalThemeColor.current.white.copy(alpha = 0.1f))
+            .background(Color.Transparent)
             .clickable(onClick = onClick)
             .padding(
                 horizontal = LocalSpacing.current.dimen18,

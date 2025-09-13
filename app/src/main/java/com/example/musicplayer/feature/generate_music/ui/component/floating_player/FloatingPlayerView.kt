@@ -21,19 +21,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import com.example.musicplayer.R
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.feature.generate_music.ui.component.MusicAlbumView
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui.theme.LocalThemeColor
 import com.example.musicplayer.ui.theme.PreviewTheme
+import com.example.musicplayer.ui_core.haze.LocalHazeSource
 import com.example.musicplayer.ui_core.preview_parameter.BooleanPreviewParameter
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.hazeEffect
 import java.time.Instant
 
 @Composable
@@ -52,16 +54,15 @@ fun FloatingPlayerView(
             .fillMaxWidth()
             .padding(LocalSpacing.current.dimen8)
             .background(Color.Transparent)
-            .dropShadow(
-                shape = shape,
-                shadow = Shadow(
-                    color = Color.Black.copy(alpha = 0.8f),
-                    radius = LocalSpacing.current.dimen4,
+            .clip(shape)
+            .hazeEffect(
+                state = LocalHazeSource.current,
+                style = HazeStyle(
+                    blurRadius = 18.dp,
+                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    tint = null,
                 )
             )
-            .clip(shape)
-            .background(MaterialTheme.colorScheme.surface)
-            .background(LocalThemeColor.current.primary.p200.copy(alpha = 0.4f))
             .border(
                 width = LocalSpacing.current.dimen1,
                 color = LocalThemeColor.current.white.copy(alpha = 0.05f),

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
@@ -39,6 +40,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
@@ -80,6 +82,16 @@ fun CreateMusicTextFieldRow(
                 }
             }
     }
+    val focusManager = LocalFocusManager.current
+    val textFieldState = rememberTextFieldState()
+
+    val onDone = {
+        if (textFieldState.text.isNotBlank()) {
+            focusManager.clearFocus(force = true)
+            onGenerate(textFieldState.text.toString())
+            textFieldState.clearText()
+        }
+    }
     Row(
         modifier = modifier
             .focusRequester(focusRequester)
@@ -97,7 +109,6 @@ fun CreateMusicTextFieldRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen2)
     ) {
-        val textFieldState = rememberTextFieldState()
         Icon(
             modifier = Modifier.minimumInteractiveComponentSize(),
             imageVector = Icons.Default.Add,
@@ -108,15 +119,11 @@ fun CreateMusicTextFieldRow(
             modifier = Modifier
                 .weight(1f),
             textFieldState = textFieldState,
-            interactionSource = interactionSource
+            interactionSource = interactionSource,
+            onDone = onDone
         )
-        val focusManager = LocalFocusManager.current
         IconButton(
-            onClick = {
-                focusManager.clearFocus(force = true)
-                onGenerate(textFieldState.text.toString())
-                textFieldState.clearText()
-            },
+            onClick = onDone,
             enabled = textFieldState.text.isNotBlank()
         ) {
             Icon(
@@ -131,7 +138,8 @@ fun CreateMusicTextFieldRow(
 private fun CreateMusicTextField(
     modifier: Modifier = Modifier,
     textFieldState: TextFieldState,
-    interactionSource: MutableInteractionSource
+    interactionSource: MutableInteractionSource,
+    onDone: () -> Unit
 ) {
     BasicTextField(
         modifier = modifier,
@@ -142,6 +150,12 @@ private fun CreateMusicTextField(
         ),
         lineLimits = TextFieldLineLimits.SingleLine,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = ImeAction.Done
+        ),
+        onKeyboardAction = {
+            onDone()
+        },
         decorator = { innerTextField ->
             Box(
                 contentAlignment = Alignment.CenterStart,

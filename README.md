@@ -4,6 +4,18 @@
 
 MusicPlayer is a modern Android application built with **Jetpack Compose** that focuses on AI-powered music generation and playback capabilities. Currently implements dummy vibration generation as a placeholder for future music generation features. The app follows **Clean Architecture** principles with a feature-based modular structure.
 
+## 📱 Screenshots
+
+| Main Screen | Music Creation | Music List                                      |
+|-------------|----------------|-------------------------------------------------|
+| ![Main Screen](screenshots/main_screen.png) | ![Create Music](screenshots/create_music.png) | ![Music List](screenshots/music_generation.png) |
+
+| Floating Player |
+|-----------------|
+| ![Floating Player](screenshots/floating_player.png) |
+
+*Screenshots showcase the 4-phase animated progress borders, glowing text input, 12 diverse dummy music items, and overall dark theme design*
+
 ## 🏗️ Architecture Pattern
 
 ### Clean Architecture + Feature-Based Modularization
@@ -39,8 +51,6 @@ app/src/main/java/com/example/musicplayer/
 - **Coil** - Image loading
 - **Haze** - Blur effects
 - **Material 3** - Design system
-
-
 
 ### Adding New Features:
 1. Create feature package under `feature/`

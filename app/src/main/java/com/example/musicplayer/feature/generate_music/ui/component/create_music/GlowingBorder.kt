@@ -30,7 +30,7 @@ fun Modifier.glowingBorder(
             initialValue = 0f,
             targetValue = 1f,
             animationSpec = infiniteRepeatable(
-                tween(durationMillis = colorCount * 4000),
+                tween(durationMillis = colorCount * 3000),
                 repeatMode = RepeatMode.Restart
             )
         )

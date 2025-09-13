@@ -53,19 +53,21 @@ fun Modifier.glowingBorder(
         animationSpec = infiniteRepeatable(
             tween(5000),
             RepeatMode.Reverse
-        ),
+        )
     )
 
     val globalIndexFloat = phase * colors.size
     val baseIndex = globalIndexFloat.toInt()
     val localFraction = globalIndexFloat - baseIndex
 
-    val windowColors = remember(baseIndex, localFraction, colorCount) {
-        List(colorCount) { offset ->
-            val firstIndex = (baseIndex + offset) % colors.size
-            val secondIndex = (firstIndex + 1) % colors.size
-            lerp(colors[firstIndex], colors[secondIndex], localFraction)
-        }
+    val windowColorsList = remember(colorCount) {
+        MutableList(colorCount) { Color.Transparent }
+    }
+
+    repeat(colorCount) { offset ->
+        val firstIndex = (baseIndex + offset) % colors.size
+        val secondIndex = (firstIndex + 1) % colors.size
+        windowColorsList[offset] = lerp(colors[firstIndex], colors[secondIndex], localFraction)
     }
 
 
@@ -83,7 +85,7 @@ fun Modifier.glowingBorder(
                 radius.toDp()
             },
             brush = Brush.linearGradient(
-                colors = windowColors,
+                colors = windowColorsList,
                 tileMode = TileMode.Mirror
             ),
             alpha = alpha

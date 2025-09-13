@@ -24,17 +24,18 @@ class GenerateMusicScreenStateProducer @Inject constructor(
             .selectedContent
             ?.takeIf { musicPlayerState.playing }
 
-        val sortedMusicItems = musics
-            .sortedByDescending { it.createdAt }
+        val musicItems = musics
             .map { music -> music.toListItem(isPlaying = currentlyPlaying?.id == music.id) }
 
-        val sortedGeneratingItems = musicGenerationRecords
+        val generatingItems = musicGenerationRecords
             .values
-            .sortedByDescending { it.createdAt }
+            .toList()
             .getGeneratingItems()
 
         GenerateMusicScreenState(
-            items = sortedGeneratingItems + sortedMusicItems,
+            items = (musicItems + generatingItems)
+                .distinctBy { it.id }
+                .sortedByDescending { it.createdAt },
             musicPlayerState = musics.getMusicPlayerContent(musicPlayerState)
         )
     }

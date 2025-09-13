@@ -3,6 +3,7 @@ package com.example.musicplayer.feature.generate_music.ui.model
 import androidx.compose.runtime.Immutable
 import com.example.musicplayer.feature.generate_music.data.model.Music
 import com.example.musicplayer.feature.generate_music.data.model.MusicGenerationRecord
+import java.time.Instant
 
 @Immutable
 class GenerateMusicScreenState(
@@ -35,16 +36,17 @@ data class MusicPlayerState(
 )
 
 sealed class GenerateMusicListItem(
-    val id: String
+    val id: String,
+    val createdAt: Instant
 ) {
     @Immutable
     data class MusicItem(
         val music: Music,
         val isPlaying: Boolean
-    ) : GenerateMusicListItem(music.id)
+    ) : GenerateMusicListItem(music.id, music.createdAt)
 
     @Immutable
     data class GeneratingItem(
         val musicGenerationRecord: MusicGenerationRecord
-    ) : GenerateMusicListItem(musicGenerationRecord.id)
+    ) : GenerateMusicListItem(musicGenerationRecord.id, musicGenerationRecord.createdAt)
 }

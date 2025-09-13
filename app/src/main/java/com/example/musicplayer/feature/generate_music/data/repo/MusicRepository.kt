@@ -98,7 +98,7 @@ class MusicRepository @Inject constructor(
             prompt = prompt,
             song = completedState.song,
             image = completedState.image,
-            createdAt = completedState.createdAt,
+            createdAt = this.createdAt,
             id = id,
             version = version
         )
@@ -118,7 +118,6 @@ class MusicRepository @Inject constructor(
     }
 
     fun regenerate(music: Music) {
-        delete(music)
         val generationRecord = MusicGenerationRecord(
             id = music.id,
             prompt = music.prompt,
@@ -126,5 +125,6 @@ class MusicRepository @Inject constructor(
             createdAt = music.createdAt
         )
         generateMusic(generationRecord)
+        delete(music)
     }
 }

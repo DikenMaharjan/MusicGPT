@@ -42,7 +42,6 @@ fun CreateMusicButton(
             contentDescription = null
         )
         Text(
-            modifier = Modifier.sharedElementForCreateText(),
             text = stringResource(R.string.common_create)
         )
     }

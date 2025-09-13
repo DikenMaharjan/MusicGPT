@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
@@ -33,28 +34,18 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathOperation
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.addOutline
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.LayoutDirection
 import com.example.musicplayer.R
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui.theme.LocalThemeColor
 import com.example.musicplayer.ui.theme.PreviewTheme
 import com.example.musicplayer.ui_core.components.tap_to_remove_focus.clearFocusOnTap
+import com.example.musicplayer.ui_core.modifier.rippleLessClickable
 import kotlinx.coroutines.flow.dropWhile
 
 @Composable
@@ -92,24 +83,16 @@ fun CreateMusicTextFieldRow(
     Row(
         modifier = modifier
             .focusRequester(focusRequester)
+            .rippleLessClickable {
+                focusRequester.requestFocus()
+            }
             .fillMaxWidth()
             .clearFocusOnTap()
             .imePadding()
             .padding(LocalSpacing.current.dimen12)
-            .dropShadow(
-                shape = shape,
-                shadow = androidx.compose.ui.graphics.shadow.Shadow(
-                    radius = LocalSpacing.current.dimen18,
-                    spread = LocalSpacing.current.dimen2,
-                    brush = Brush.linearGradient(
-                        0f to Color.Green,
-                        1f to Color.Blue
-                    )
-                )
-            )
+            .glowingBorder()
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surface, shape = CircleShape)
-
+            .background(LocalThemeColor.current.primary.p250.copy(alpha = 0.9f))
             .padding(LocalSpacing.current.dimen8),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.dimen2)
@@ -123,8 +106,7 @@ fun CreateMusicTextFieldRow(
         )
         CreateMusicTextField(
             modifier = Modifier
-                .weight(1f)
-                .sharedBoundsForCreateViews(),
+                .weight(1f),
             textFieldState = textFieldState,
             interactionSource = interactionSource
         )
@@ -158,6 +140,7 @@ private fun CreateMusicTextField(
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             color = LocalContentColor.current
         ),
+        lineLimits = TextFieldLineLimits.SingleLine,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorator = { innerTextField ->
             Box(
@@ -166,7 +149,7 @@ private fun CreateMusicTextField(
             ) {
                 if (textFieldState.text.isBlank()) {
                     Text(
-                        modifier = Modifier.sharedElementForCreateText(),
+                        modifier = Modifier,
                         text = stringResource(R.string.create_music_text_field_row_placeholder),
                         color = LocalThemeColor.current.white.copy(alpha = 0.2f)
                     )
@@ -175,56 +158,8 @@ private fun CreateMusicTextField(
             }
         },
     )
-
 }
 
-val shape = object : Shape {
-
-
-    override fun createOutline(
-        size: Size,
-        layoutDirection: LayoutDirection,
-        density: Density
-    ): Outline {
-        val wavyShape = Path().apply {
-            val width = size.width
-            val height = size.height
-            val waveHeight = 80f
-            val waveLength = width / 2
-
-            moveTo(0f, waveHeight)
-            cubicTo(waveLength / 2, 0f, waveLength / 2, waveHeight * 2, waveLength, waveHeight)
-            cubicTo(
-                waveLength + waveLength / 2, 0f,
-                waveLength + waveLength / 2, waveHeight * 2,
-                waveLength * 2, waveHeight
-            )
-            lineTo(width, height)
-            lineTo(0f, height)
-            close()
-        }
-        val circlePath = Path().apply {
-            addOutline(
-                CircleShape.createOutline(
-                    size = size,
-                    layoutDirection = layoutDirection,
-                    density = density
-                )
-            )
-        }
-        val intersect = Path().apply {
-            this.op(wavyShape, circlePath, PathOperation.Intersect)
-        }
-        val path =
-            Path().apply {
-                addPath(intersect)
-                close()
-            }
-        return Outline.Generic(path)
-    }
-
-
-}
 
 @Preview
 @Composable

@@ -14,12 +14,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.example.musicplayer.feature.generate_music.ui.component.floating_player.LocalCustomBottomInsets
-import com.example.musicplayer.feature.generate_music.ui.component.floating_player.customBottomInsets
 import com.example.musicplayer.ui.theme.LocalSpacing
 import com.example.musicplayer.ui_core.components.layout.ProvideAnimatedVisibilityScope
 import com.example.musicplayer.ui_core.components.layout.sharedBoundsWithLocalScopes
-import com.example.musicplayer.ui_core.components.layout.sharedElementWithLocalScopes
 import com.example.musicplayer.ui_core.haze.LocalHazeSource
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
@@ -32,8 +29,7 @@ fun CreateMusicView(
 ) {
     val createMusicTextFieldState = rememberCreateMusicTextFileState()
     AnimatedContent(
-        modifier = modifier
-            .customBottomInsets(LocalCustomBottomInsets.current),
+        modifier = modifier,
         targetState = createMusicTextFieldState.isShown
     ) { isTextFieldVisible ->
         ProvideAnimatedVisibilityScope(
@@ -42,7 +38,8 @@ fun CreateMusicView(
             if (isTextFieldVisible) {
                 CreateMusicTextFieldRow(
                     modifier = Modifier
-                        .imePadding(),
+                        .imePadding()
+                        .sharedBoundsForCreateViews(),
                     onFocusRemoved = createMusicTextFieldState::hide,
                     onGenerate = generateMusic
                 )
@@ -57,7 +54,8 @@ fun CreateMusicView(
                                 backgroundColor = MaterialTheme.colorScheme.surface,
                                 tint = null,
                             )
-                        ),
+                        )
+                        .sharedBoundsForCreateViews(),
                     onClick = createMusicTextFieldState::show
                 )
             }
@@ -91,13 +89,5 @@ private fun rememberCreateMusicTextFileState(): CreateMusicTextFieldState {
 fun Modifier.sharedBoundsForCreateViews(): Modifier {
     return this.sharedBoundsWithLocalScopes(
         "musicGPT-create-bounds"
-    )
-}
-
-@Composable
-@OptIn(ExperimentalSharedTransitionApi::class)
-fun Modifier.sharedElementForCreateText(): Modifier {
-    return this.sharedElementWithLocalScopes(
-        "musicGPT-create-text"
     )
 }

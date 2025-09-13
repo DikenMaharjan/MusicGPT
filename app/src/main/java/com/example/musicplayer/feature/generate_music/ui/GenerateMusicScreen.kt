@@ -110,7 +110,8 @@ private fun GenerateMusicContent(
                     .align(Alignment.BottomCenter)
                     .onGloballyPositioned { coord ->
                         createMusicViewInsets.setLayoutPosition(coord)
-                    },
+                    }
+                    .customBottomInsets(floatingPlayerInsets),
                 generateMusic = generateMusic
             )
             InsetsProvidingFloatingPlayerView(

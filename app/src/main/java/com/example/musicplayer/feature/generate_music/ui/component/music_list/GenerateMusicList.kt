@@ -64,6 +64,10 @@ fun GenerateMusicList(
                     MusicItem(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .animateItem(
+                                fadeInSpec = tween(600),
+                                fadeOutSpec = tween(600)
+                            )
                             .clickable { playMusic(item.music) },
                         musicItem = item,
                         delete = delete,
